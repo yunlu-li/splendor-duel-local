@@ -60,7 +60,7 @@ export function canSpendPrivilegeTakeToken(state: GameState, playerId: string, c
 export function canReplenishBoard(state: GameState, playerId: string): ValidationResult {
   const turn = ensureTurn(state, playerId);
   if (!turn.ok) return turn;
-  if (state.turnPhase !== 'optional' && state.turnPhase !== 'mandatory') return fail('当前阶段不能补充棋盘');
+  if (state.turnPhase !== 'optional') return fail('补充棋盘只能在可选行动阶段执行');
   if (state.bag.length === 0) return fail('袋中没有 token');
   if (!state.board.some((cell) => cell.token === null)) return fail('棋盘没有空位');
   return ok();

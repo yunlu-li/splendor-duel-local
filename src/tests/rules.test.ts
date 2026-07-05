@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { GameState, TokenColor } from '../shared/types/game';
 import { initializeGame } from '../shared/rules/initialize';
-import { canSpendPrivilegeTakeToken, canTakeTokens, discountedCost } from '../shared/rules/validators';
+import { canReplenishBoard, canSpendPrivilegeTakeToken, canTakeTokens, discountedCost } from '../shared/rules/validators';
 import { applyAction, IllegalActionError } from '../shared/rules/reducers';
 import { checkVictory, sameColorPrestige } from '../shared/rules/scoring';
 
@@ -56,6 +56,20 @@ describe('token line validation on 5x5 board', () => {
 });
 
 describe('reducers', () => {
+  it('only allows replenishing the board during the optional phase', () => {
+    const game = emptyBoardGame();
+    game.bag = ['white'];
+    const emptyCell = game.board[0];
+    emptyCell.token = null;
+
+    game.turnPhase = 'optional';
+    expect(canReplenishBoard(game, 'p1').ok).toBe(true);
+
+    game.turnPhase = 'mandatory';
+    expect(canReplenishBoard(game, 'p1').ok).toBe(false);
+    expect(() => applyAction(game, 'p1', { type: 'REPLENISH_BOARD' })).toThrow(IllegalActionError);
+  });
+
   it('spends a privilege to take a selected non-gold token without ending the turn', () => {
     const game = emptyBoardGame();
     game.turnPhase = 'optional';

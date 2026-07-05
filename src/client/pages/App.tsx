@@ -248,7 +248,7 @@ function RulesModal({ close }: { close: () => void }) {
             <h3>回合流程</h3>
             <ul>
               <li>每回合先进入可选行动阶段，可以花特权拿 1 个非黄金 token，或补充棋盘。</li>
-              <li>之后必须执行一个主要行动：拿宝石、买卡、保留卡或补盘。</li>
+              <li>之后必须执行一个主要行动：拿宝石、买卡或保留卡。</li>
               <li>如果 token 超过 10 个，需要弃到 10 个以内。</li>
             </ul>
           </section>
@@ -710,7 +710,7 @@ export function App() {
           <div className="action-bar board-actions">
             <button disabled={gameView.status !== 'playing' || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿取</button>
             <button disabled={!selectedPrivilegeCheck?.ok} title={selectedPrivilegeCheck?.reason} onClick={() => run(currentPlayer.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>特权拿</button>
-            <button disabled={Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'REPLENISH_BOARD' })}>补盘</button>
+            <button disabled={gameView.turnPhase !== 'optional' || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'REPLENISH_BOARD' })}>补盘</button>
             <button onClick={() => setSelectedCells([])}>清空</button>
           </div>
           <div className="board-below-tray">
@@ -839,7 +839,7 @@ function TurnCoachPanel({ game, selectedCells, clearSelection, run, botEnabled, 
         <button disabled={isBotTurn || !suggestion.action} onClick={() => suggestion.action && run(player.id, suggestion.action)}>执行建议</button>
         <button disabled={!takeCheck?.ok} onClick={() => run(player.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿已选 token</button>
         <button disabled={!privilegeCheck?.ok} onClick={() => run(player.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>花特权拿 1 个</button>
-        <button disabled={!game.board.some((cell) => cell.token === null) || game.bag.length === 0 || Boolean(game.awaitingChoice)} onClick={() => run(player.id, { type: 'REPLENISH_BOARD' })}>补充棋盘</button>
+        <button disabled={game.turnPhase !== 'optional' || !game.board.some((cell) => cell.token === null) || game.bag.length === 0 || Boolean(game.awaitingChoice)} onClick={() => run(player.id, { type: 'REPLENISH_BOARD' })}>补充棋盘</button>
         <button disabled={!selectedCells.length} onClick={clearSelection}>清空选择</button>
       </div>
       <div className="coach-lists">
