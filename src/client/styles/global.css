@@ -1918,6 +1918,28 @@ body {
 .royal-panel {
   position: relative;
 }
+
+/* Battle-page framing: keep the title on one line and leave breathing room around the table. */
+.compact-shell {
+  transform: scale(.8);
+  transform-origin: top center;
+}
+.top-courtbar {
+  grid-template-columns: 330px minmax(300px, 1fr) 430px;
+}
+.brand-lockup h1 {
+  white-space: nowrap;
+}
+
+@media (max-width: 1250px) {
+  .compact-shell {
+    transform: none;
+  }
+  .top-courtbar {
+    grid-template-columns: 1fr;
+  }
+}
+
 .player-panel {
   background:
     linear-gradient(90deg, rgba(30, 16, 42, .88), rgba(84, 38, 86, .48), rgba(30, 16, 42, .88)),
