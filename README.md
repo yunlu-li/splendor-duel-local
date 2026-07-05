@@ -24,7 +24,8 @@ https://yunlu-li.github.io/splendor-duel-local/
 如果这个地址暂时显示 404，说明 GitHub Pages 还没有发布完成，或仓库还没有启用 Pages。仓库所有者需要到：
 
 ```text
-Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
+Settings -> Pages -> Build and deployment -> Source -> Deploy from a branch
+Branch -> gh-pages / root
 ```
 
 然后重新运行 `Deploy GitHub Pages` workflow。
