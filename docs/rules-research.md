@@ -82,11 +82,11 @@
 - 卡牌能力可能进入 `awaiting_choice`：如偷取目标、gold 支付分配、COPY_BONUS 目标、royal card 选择、弃 token。
 - 不直接使用官方卡面图；开发期可用抽象卡牌数据和原创图标。
 
-## 待补充数据
+## 当前实现数据
 
-- 67 张珠宝卡的完整结构化数据（level、bonusColor、cost、prestige、crowns、ability）。建议从用户拥有的实体游戏/官方授权资料手工录入，或使用原创兼容牌组。
-- 4 张 royal card 的 points/ability 精确组合。
-- 中央棋盘坐标拓扑与官方螺旋顺序需要在实现时固化为常量。
+- 67 张珠宝卡和 4 张 royal card 已整理为结构化本地数据：`src/shared/constants/cards.local.ts`。
+- 中央棋盘坐标拓扑和螺旋填充顺序已固化为常量：`src/shared/constants/board.ts`。
+- 卡牌数据核对记录保留在 `docs/cards-official-local-review.md` 和 `docs/cards-official-local.json`。
 
 ## 参考来源与版权边界
 
@@ -96,11 +96,13 @@
 - BoardGameArena 规则帮助：`https://en.doc.boardgamearena.com/Gamehelpsplendorduel`
 - BGG 页面：`https://boardgamegeek.com/boardgame/364073/splendor-duel`
 
-注意：公开规则足够实现规则引擎；但 67 张官方卡的完整牌表、成本、插画与文本属于出版内容/素材，不建议直接抓取或复制到公开项目。工程上建议：
+注意：公开规则足够实现规则引擎；但官方卡牌文本、插画与完整出版内容存在版权边界。当前项目不使用官方卡面图，卡牌 UI 采用抽象展示。此前用于核对数据的原始网页抓取快照已从仓库删除，只保留本地实现需要的结构化数据和人工整理说明。
 
-1. 开发期使用抽象/原创牌组，字段结构兼容原规则；
-2. 若用户拥有实体游戏，可在本地私用数据文件中手工录入；
-3. 若要公开发布，使用原创名称、原创图标、原创成本分布，避免复刻官方卡面与完整牌表。
+若要进一步公开发布或部署，建议继续：
+
+1. 使用原创名称、原创图标和原创视觉表达；
+2. 在 README 和页面说明中保留“非官方、非商业、学习原型”的边界；
+3. 避免加入官方规则书全文、卡面图片或未授权素材。
 
 ## 建议结构化类型
 
