@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 160" role="img" aria-label="privilege scroll">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8c785e"/>
+      <stop offset="0.16" stop-color="#d7c7a7"/>
+      <stop offset="0.48" stop-color="#c0a77e"/>
+      <stop offset="0.72" stop-color="#efe1c1"/>
+      <stop offset="1" stop-color="#8f7755"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2e6ca"/>
+      <stop offset="0.5" stop-color="#c7ad7e"/>
+      <stop offset="1" stop-color="#947047"/>
+    </linearGradient>
+    <radialGradient id="topRoll" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#f5ead2"/>
+      <stop offset="0.28" stop-color="#e2d0ad"/>
+      <stop offset="0.44" stop-color="#8d6f4d"/>
+      <stop offset="0.56" stop-color="#cdb58c"/>
+      <stop offset="1" stop-color="#7f664b"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-20%" width="160%" height="160%">
+      <feDropShadow dx="6" dy="8" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <filter id="softInner">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+      <feOffset dx="-1.5" dy="0"/>
+      <feComposite operator="arithmetic" k2="-1" k3="1" in2="SourceAlpha"/>
+      <feColorMatrix values="0 0 0 0 0.25 0 0 0 0 0.18 0 0 0 0 0.11 0 0 0 .45 0"/>
+      <feComposite in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <!-- flared lower skirt -->
+    <path d="M32 91 C34 110 26 130 16 150 C30 157 66 157 80 150 C70 130 62 110 64 91 Z"
+          fill="url(#warm)" stroke="#7d6040" stroke-width="2"/>
+
+    <!-- main rolled parchment body, pinched waist -->
+    <path d="M28 21 C26 38 27 62 31 82 C34 97 62 97 65 82 C69 62 70 38 68 21 C58 27 38 27 28 21 Z"
+          fill="url(#body)" stroke="#765a3b" stroke-width="2" filter="url(#softInner)"/>
+
+    <!-- side folded sheets visible in screenshot -->
+    <path d="M27 47 C19 58 19 86 30 103 C36 86 36 62 31 44 Z" fill="#d9cfbc" opacity="0.72" stroke="#8d7455" stroke-width="1.5"/>
+    <path d="M66 46 C76 60 76 88 64 103 C59 84 60 62 64 44 Z" fill="#eee5d4" opacity="0.54" stroke="#8d7455" stroke-width="1.5"/>
+
+    <!-- top rolled cylinder -->
+    <ellipse cx="48" cy="23" rx="24" ry="13" fill="url(#topRoll)" stroke="#70573c" stroke-width="2"/>
+    <path d="M35 23 C39 13 57 13 61 23 C56 19 42 19 35 23 Z" fill="#d8c49d" opacity="0.75"/>
+    <path d="M42 15 C58 18 58 28 43 31" fill="none" stroke="#8a6c49" stroke-width="4" stroke-linecap="round" opacity="0.72"/>
+    <path d="M42 15 C55 18 55 26 44 28" fill="none" stroke="#efe0bf" stroke-width="1.8" stroke-linecap="round" opacity="0.75"/>
+
+    <!-- band around the waist -->
+    <path d="M25 78 C35 72 61 72 71 78 L72 91 C61 98 35 98 24 91 Z"
+          fill="url(#warm)" stroke="#735736" stroke-width="2"/>
+    <path d="M28 80 C39 85 57 85 68 80" fill="none" stroke="#f5e6c4" stroke-width="2" opacity="0.45"/>
+
+    <!-- circular seal with S -->
+    <circle cx="48" cy="86" r="15" fill="#c9b086" stroke="#745638" stroke-width="2.4"/>
+    <circle cx="48" cy="86" r="10.5" fill="none" stroke="#7a5b39" stroke-width="1.8" opacity="0.55"/>
+    <text x="48" y="91" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#715231">S</text>
+
+    <!-- carved vertical highlights -->
+    <path d="M38 34 C36 48 37 62 40 72" fill="none" stroke="#f4ead3" stroke-width="4" opacity="0.28" stroke-linecap="round"/>
+    <path d="M60 35 C62 48 61 64 58 73" fill="none" stroke="#6f5638" stroke-width="3" opacity="0.28" stroke-linecap="round"/>
+  </g>
+</svg>

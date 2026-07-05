@@ -1,0 +1,1096 @@
+[
+  {
+    "id": "l1-01",
+    "name": "Level 1 White Bonus #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "blue": 1,
+      "green": 1,
+      "red": 1,
+      "black": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-01.png"
+  },
+  {
+    "id": "l1-02",
+    "name": "Level 1 White Bonus #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "white",
+    "cost": {
+      "blue": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-02.png"
+  },
+  {
+    "id": "l1-03",
+    "name": "Level 1 White Bonus #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "blue": 2,
+      "green": 2,
+      "pearl": 1
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level1-03.png"
+  },
+  {
+    "id": "l1-04",
+    "name": "Level 1 White Bonus #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "red": 2,
+      "black": 2
+    },
+    "ability": "Take a gem of the same color",
+    "image": "/images/cards/level1-04.png"
+  },
+  {
+    "id": "l1-05",
+    "name": "Level 1 White Bonus #5",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "green": 2,
+      "red": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-05.png"
+  },
+  {
+    "id": "l1-06",
+    "name": "Level 1 Blue Bonus #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "white": 1,
+      "green": 1,
+      "red": 1,
+      "black": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-06.png"
+  },
+  {
+    "id": "l1-07",
+    "name": "Level 1 Blue Bonus #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "blue",
+    "cost": {
+      "green": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-07.png"
+  },
+  {
+    "id": "l1-08",
+    "name": "Level 1 Blue Bonus #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "green": 2,
+      "red": 2,
+      "pearl": 1
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level1-08.png"
+  },
+  {
+    "id": "l1-09",
+    "name": "Level 1 Blue Bonus #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "white": 2,
+      "black": 2
+    },
+    "ability": "Take a gem of the same color",
+    "image": "/images/cards/level1-09.png"
+  },
+  {
+    "id": "l1-10",
+    "name": "Level 1 Blue Bonus #5",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "red": 2,
+      "black": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-10.png"
+  },
+  {
+    "id": "l1-11",
+    "name": "Level 1 Green Bonus #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "white": 1,
+      "blue": 1,
+      "red": 1,
+      "black": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-11.png"
+  },
+  {
+    "id": "l1-12",
+    "name": "Level 1 Green Bonus #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "green",
+    "cost": {
+      "red": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-12.png"
+  },
+  {
+    "id": "l1-13",
+    "name": "Level 1 Green Bonus #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "red": 2,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level1-13.png"
+  },
+  {
+    "id": "l1-14",
+    "name": "Level 1 Green Bonus #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "white": 2,
+      "blue": 2
+    },
+    "ability": "Take a gem of the same color",
+    "image": "/images/cards/level1-14.png"
+  },
+  {
+    "id": "l1-15",
+    "name": "Level 1 Green Bonus #5",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "white": 3,
+      "black": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level1-15.png"
+  },
+  {
+    "id": "l1-16",
+    "name": "Level 1 Black Bonus #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "white": 1,
+      "blue": 1,
+      "green": 1,
+      "red": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-16.png"
+  },
+  {
+    "id": "l1-17",
+    "name": "Level 1 Black Bonus #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "black",
+    "cost": {
+      "white": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-17.png"
+  },
+  {
+    "id": "l1-18",
+    "name": "Level 1 Black Bonus #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "white": 2,
+      "blue": 2,
+      "pearl": 1
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level1-18.png"
+  },
+  {
+    "id": "l1-19",
+    "name": "Level 1 Black Bonus #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "green": 2,
+      "red": 2
+    },
+    "ability": "Take a gem of the same color",
+    "image": "/images/cards/level1-19.png"
+  },
+  {
+    "id": "l1-20",
+    "name": "Level 1 Black Bonus #5",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "blue": 2,
+      "green": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-20.png"
+  },
+  {
+    "id": "l1-21",
+    "name": "Level 1 Red Bonus #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "white": 1,
+      "blue": 1,
+      "green": 1,
+      "black": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-21.png"
+  },
+  {
+    "id": "l1-22",
+    "name": "Level 1 Red Bonus #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "red",
+    "cost": {
+      "black": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-22.png"
+  },
+  {
+    "id": "l1-23",
+    "name": "Level 1 Red Bonus #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "white": 2,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level1-23.png"
+  },
+  {
+    "id": "l1-24",
+    "name": "Level 1 Red Bonus #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "blue": 2,
+      "green": 2
+    },
+    "ability": "Take a gem of the same color",
+    "image": "/images/cards/level1-24.png"
+  },
+  {
+    "id": "l1-25",
+    "name": "Level 1 Red Bonus #5",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "white": 2,
+      "blue": 3
+    },
+    "ability": null,
+    "image": "/images/cards/level1-25.png"
+  },
+  {
+    "id": "l1-26",
+    "name": "Level 1 Associate #1",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "associate",
+    "cost": {
+      "black": 4,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-26.png"
+  },
+  {
+    "id": "l1-27",
+    "name": "Level 1 Associate #2",
+    "kind": "jewel",
+    "level": 1,
+    "points": 0,
+    "crowns": 1,
+    "bonus": "associate",
+    "cost": {
+      "white": 4,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-27.png"
+  },
+  {
+    "id": "l1-28",
+    "name": "Level 1 Gold Card",
+    "kind": "jewel",
+    "level": 1,
+    "points": 3,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {
+      "red": 4,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-28.png"
+  },
+  {
+    "id": "l1-29",
+    "name": "Level 1 Associate #3",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "associate",
+    "cost": {
+      "blue": 2,
+      "red": 2,
+      "black": 1,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-29.png"
+  },
+  {
+    "id": "l1-30",
+    "name": "Level 1 Associate #4",
+    "kind": "jewel",
+    "level": 1,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "associate",
+    "cost": {
+      "white": 2,
+      "green": 2,
+      "black": 1,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level1-30.png"
+  },
+  {
+    "id": "l2-01",
+    "name": "Level 2 White Bonus #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 1,
+    "bonus": "white",
+    "cost": {
+      "green": 2,
+      "red": 2,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-01.png"
+  },
+  {
+    "id": "l2-02",
+    "name": "Level 2 White Bonus #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "blue": 4,
+      "red": 3
+    },
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/level2-02.png"
+  },
+  {
+    "id": "l2-03",
+    "name": "Level 2 White Bonus #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "white": 4,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": "Gain a privilege",
+    "image": "/images/cards/level2-03.png"
+  },
+  {
+    "id": "l2-04",
+    "name": "Level 2 White Bonus #4",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "blue": 5,
+      "green": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level2-04.png"
+  },
+  {
+    "id": "l2-05",
+    "name": "Level 2 Blue Bonus #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 1,
+    "bonus": "blue",
+    "cost": {
+      "white": 2,
+      "red": 2,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-05.png"
+  },
+  {
+    "id": "l2-06",
+    "name": "Level 2 Blue Bonus #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "green": 4,
+      "black": 3
+    },
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/level2-06.png"
+  },
+  {
+    "id": "l2-07",
+    "name": "Level 2 Blue Bonus #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "white": 2,
+      "blue": 4,
+      "pearl": 1
+    },
+    "ability": "Gain a privilege",
+    "image": "/images/cards/level2-07.png"
+  },
+  {
+    "id": "l2-08",
+    "name": "Level 2 Blue Bonus #4",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "green": 5,
+      "red": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level2-08.png"
+  },
+  {
+    "id": "l2-09",
+    "name": "Level 2 Green Bonus #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 1,
+    "bonus": "green",
+    "cost": {
+      "white": 2,
+      "blue": 2,
+      "black": 2,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-09.png"
+  },
+  {
+    "id": "l2-10",
+    "name": "Level 2 Green Bonus #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "white": 3,
+      "red": 4
+    },
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/level2-10.png"
+  },
+  {
+    "id": "l2-11",
+    "name": "Level 2 Green Bonus #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "blue": 2,
+      "green": 4,
+      "pearl": 1
+    },
+    "ability": "Gain a privilege",
+    "image": "/images/cards/level2-11.png"
+  },
+  {
+    "id": "l2-12",
+    "name": "Level 2 Green Bonus #4",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "red": 5,
+      "black": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level2-12.png"
+  },
+  {
+    "id": "l2-13",
+    "name": "Level 2 Black Bonus #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 1,
+    "bonus": "black",
+    "cost": {
+      "blue": 2,
+      "green": 2,
+      "red": 2,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-13.png"
+  },
+  {
+    "id": "l2-14",
+    "name": "Level 2 Black Bonus #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "white": 4,
+      "green": 3
+    },
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/level2-14.png"
+  },
+  {
+    "id": "l2-15",
+    "name": "Level 2 Black Bonus #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "red": 2,
+      "black": 4,
+      "pearl": 1
+    },
+    "ability": "Gain a privilege",
+    "image": "/images/cards/level2-15.png"
+  },
+  {
+    "id": "l2-16",
+    "name": "Level 2 Black Bonus #4",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "white": 5,
+      "blue": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level2-16.png"
+  },
+  {
+    "id": "l2-17",
+    "name": "Level 2 Red Bonus #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 1,
+    "bonus": "red",
+    "cost": {
+      "white": 2,
+      "blue": 2,
+      "green": 2,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-17.png"
+  },
+  {
+    "id": "l2-18",
+    "name": "Level 2 Red Bonus #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "blue": 3,
+      "black": 4
+    },
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/level2-18.png"
+  },
+  {
+    "id": "l2-19",
+    "name": "Level 2 Red Bonus #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "green": 2,
+      "red": 4,
+      "pearl": 1
+    },
+    "ability": "Gain a privilege",
+    "image": "/images/cards/level2-19.png"
+  },
+  {
+    "id": "l2-20",
+    "name": "Level 2 Red Bonus #4",
+    "kind": "jewel",
+    "level": 2,
+    "points": 1,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "white": 2,
+      "black": 5
+    },
+    "ability": null,
+    "image": "/images/cards/level2-20.png"
+  },
+  {
+    "id": "l2-21",
+    "name": "Level 2 Associate #1",
+    "kind": "jewel",
+    "level": 2,
+    "points": 2,
+    "crowns": 0,
+    "bonus": "associate",
+    "cost": {
+      "green": 6,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-21.png"
+  },
+  {
+    "id": "l2-22",
+    "name": "Level 2 Associate #2",
+    "kind": "jewel",
+    "level": 2,
+    "points": 0,
+    "crowns": 2,
+    "bonus": "associate",
+    "cost": {
+      "green": 6,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-22.png"
+  },
+  {
+    "id": "l2-23",
+    "name": "Level 2 Associate #3",
+    "kind": "jewel",
+    "level": 2,
+    "points": 0,
+    "crowns": 2,
+    "bonus": "associate",
+    "cost": {
+      "blue": 6,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-23.png"
+  },
+  {
+    "id": "l2-24",
+    "name": "Level 2 Gold Card",
+    "kind": "jewel",
+    "level": 2,
+    "points": 5,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {
+      "blue": 6,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level2-24.png"
+  },
+  {
+    "id": "l3-01",
+    "name": "Level 3 White Bonus #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 2,
+    "bonus": "white",
+    "cost": {
+      "blue": 3,
+      "red": 5,
+      "black": 3,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level3-01.png"
+  },
+  {
+    "id": "l3-02",
+    "name": "Level 3 White Bonus #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 4,
+    "crowns": 0,
+    "bonus": "white",
+    "cost": {
+      "white": 6,
+      "blue": 2,
+      "black": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level3-02.png"
+  },
+  {
+    "id": "l3-03",
+    "name": "Level 3 Blue Bonus #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 2,
+    "bonus": "blue",
+    "cost": {
+      "white": 3,
+      "green": 3,
+      "black": 5,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level3-03.png"
+  },
+  {
+    "id": "l3-04",
+    "name": "Level 3 Blue Bonus #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 4,
+    "crowns": 0,
+    "bonus": "blue",
+    "cost": {
+      "white": 2,
+      "blue": 6,
+      "green": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level3-04.png"
+  },
+  {
+    "id": "l3-05",
+    "name": "Level 3 Green Bonus #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 2,
+    "bonus": "green",
+    "cost": {
+      "white": 5,
+      "blue": 3,
+      "red": 3,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level3-05.png"
+  },
+  {
+    "id": "l3-06",
+    "name": "Level 3 Green Bonus #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 4,
+    "crowns": 0,
+    "bonus": "green",
+    "cost": {
+      "blue": 2,
+      "green": 6,
+      "red": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level3-06.png"
+  },
+  {
+    "id": "l3-07",
+    "name": "Level 3 Black Bonus #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 2,
+    "bonus": "black",
+    "cost": {
+      "white": 3,
+      "green": 5,
+      "red": 3,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level3-07.png"
+  },
+  {
+    "id": "l3-08",
+    "name": "Level 3 Black Bonus #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 4,
+    "crowns": 0,
+    "bonus": "black",
+    "cost": {
+      "white": 2,
+      "red": 2,
+      "black": 6
+    },
+    "ability": null,
+    "image": "/images/cards/level3-08.png"
+  },
+  {
+    "id": "l3-09",
+    "name": "Level 3 Red Bonus #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 2,
+    "bonus": "red",
+    "cost": {
+      "blue": 5,
+      "green": 3,
+      "black": 3,
+      "pearl": 1
+    },
+    "ability": null,
+    "image": "/images/cards/level3-09.png"
+  },
+  {
+    "id": "l3-10",
+    "name": "Level 3 Red Bonus #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 4,
+    "crowns": 0,
+    "bonus": "red",
+    "cost": {
+      "green": 2,
+      "red": 6,
+      "black": 2
+    },
+    "ability": null,
+    "image": "/images/cards/level3-10.png"
+  },
+  {
+    "id": "l3-11",
+    "name": "Level 3 Associate #1",
+    "kind": "jewel",
+    "level": 3,
+    "points": 3,
+    "crowns": 0,
+    "bonus": "associate",
+    "cost": {
+      "red": 8
+    },
+    "ability": "Take another turn",
+    "image": "/images/cards/level3-11.png"
+  },
+  {
+    "id": "l3-12",
+    "name": "Level 3 Associate #2",
+    "kind": "jewel",
+    "level": 3,
+    "points": 0,
+    "crowns": 3,
+    "bonus": "associate",
+    "cost": {
+      "black": 8
+    },
+    "ability": null,
+    "image": "/images/cards/level3-12.png"
+  },
+  {
+    "id": "l3-13",
+    "name": "Level 3 Gold Card",
+    "kind": "jewel",
+    "level": 3,
+    "points": 6,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {
+      "white": 8
+    },
+    "ability": null,
+    "image": "/images/cards/level3-13.png"
+  },
+  {
+    "id": "royal-01",
+    "name": "Royal Card #1",
+    "kind": "royal",
+    "level": 1,
+    "points": 2,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {},
+    "ability": "Steal a gem from opponent",
+    "image": "/images/cards/royal-01.png"
+  },
+  {
+    "id": "royal-02",
+    "name": "Royal Card #2",
+    "kind": "royal",
+    "level": 1,
+    "points": 2,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {},
+    "ability": "Take another turn",
+    "image": "/images/cards/royal-02.png"
+  },
+  {
+    "id": "royal-03",
+    "name": "Royal Card #3",
+    "kind": "royal",
+    "level": 1,
+    "points": 2,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {},
+    "ability": "Gain a privilege",
+    "image": "/images/cards/royal-03.png"
+  },
+  {
+    "id": "royal-04",
+    "name": "Royal Card #4",
+    "kind": "royal",
+    "level": 1,
+    "points": 3,
+    "crowns": 0,
+    "bonus": null,
+    "cost": {},
+    "ability": null,
+    "image": "/images/cards/royal-04.png"
+  }
+]
