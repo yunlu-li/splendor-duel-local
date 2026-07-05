@@ -519,6 +519,31 @@ body::after {
   font-size: 10px;
   color: #d9a642;
 }
+.brand-lockup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 8px;
+}
+.brand-lockup .eyebrow,
+.brand-lockup h1 {
+  grid-column: 1;
+}
+.rules-button {
+  border-color: rgba(255, 226, 150, .38);
+  background: rgba(255, 226, 150, .14);
+  color: #ffe8aa;
+  white-space: nowrap;
+}
+.compact-rules-button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 30px;
+}
 .state-ribbon {
   display: flex;
   flex-wrap: wrap;
@@ -570,6 +595,15 @@ body::after {
   border-radius: 28px;
   text-align: center;
 }
+.mode-hero-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+}
+.mode-hero-header .rules-button {
+  margin-top: 6px;
+}
 .mode-hero h1 {
   color: #ffe8aa;
   text-shadow: 0 2px 0 #4b210f, 0 0 22px rgba(246,184,75,.38);
@@ -613,6 +647,78 @@ body::after {
   color: #d8c7d9;
   font-size: 14px;
   line-height: 1.6;
+}
+.rules-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(8, 5, 17, .72);
+  backdrop-filter: blur(7px);
+}
+.rules-modal {
+  width: min(820px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 26px;
+  border-radius: 28px;
+}
+.rules-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.rules-header h2 {
+  margin: 0;
+  color: #ffe8aa;
+}
+.rules-close {
+  min-width: 72px;
+}
+.rules-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.rules-content section {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(9, 5, 17, .34);
+  border: 1px solid rgba(255, 226, 150, .12);
+}
+.rules-content h3 {
+  margin: 0 0 8px;
+  color: #ffe8aa;
+}
+.rules-content ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #d8c7d9;
+  line-height: 1.65;
+}
+@media (max-width: 760px) {
+  .mode-hero-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .rules-overlay {
+    padding: 12px;
+  }
+  .rules-modal {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+    padding: 18px;
+  }
+  .rules-header {
+    align-items: center;
+  }
+  .rules-content {
+    grid-template-columns: 1fr;
+  }
 }
 .floating-banner {
   position: fixed;

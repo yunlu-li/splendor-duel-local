@@ -222,6 +222,70 @@ function chooseBotAction(game: GameState): GameAction | null {
   return createCoachSuggestion(game).action ?? null;
 }
 
+function RulesModal({ close }: { close: () => void }) {
+  return (
+    <div className="rules-overlay" role="presentation" onClick={close}>
+      <section className="rules-modal royal-panel" role="dialog" aria-modal="true" aria-labelledby="rules-title" onClick={(event) => event.stopPropagation()}>
+        <div className="rules-header">
+          <div>
+            <p className="eyebrow">How to Play</p>
+            <h2 id="rules-title">规则说明</h2>
+          </div>
+          <button className="rules-close" onClick={close} aria-label="关闭规则说明">关闭</button>
+        </div>
+
+        <div className="rules-content">
+          <section>
+            <h3>游戏目标</h3>
+            <ul>
+              <li>率先达到 20 总威望，或</li>
+              <li>任意一种宝石颜色达到 10 威望，或</li>
+              <li>收集 10 个皇冠，即可获胜。</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>回合流程</h3>
+            <ul>
+              <li>每回合先进入可选行动阶段，可以花特权拿 1 个非黄金 token，或补充棋盘。</li>
+              <li>之后必须执行一个主要行动：拿宝石、买卡、保留卡或补盘。</li>
+              <li>如果 token 超过 10 个，需要弃到 10 个以内。</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>拿宝石</h3>
+            <ul>
+              <li>一次可以拿 1 到 3 个非黄金 token。</li>
+              <li>拿多个 token 时，它们必须相邻、连续，并且在同一行、列或对角线上。</li>
+              <li>黄金 token 不能直接拿，只能通过保留卡获得。</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>买卡和保留</h3>
+            <ul>
+              <li>购买卡牌时，已有奖励会降低对应颜色费用。</li>
+              <li>黄金 token 可以代替任意颜色补足费用缺口。</li>
+              <li>保留卡需要从棋盘拿 1 个黄金 token，保留区最多 3 张。</li>
+              <li>自己的保留卡可查看和购买，对手的保留卡只显示数量。</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>特权和卡牌能力</h3>
+            <ul>
+              <li>有特权时，可以在可选行动阶段花 1 个特权拿 1 个非黄金 token。</li>
+              <li>部分卡牌会触发能力，例如获得特权、额外回合、偷取 token、拿同色 token 或复制奖励。</li>
+              <li>出现选择面板时，需要先完成当前选择，才能继续其他行动。</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function RoomLobby({ room, playerId, playerName, setPlayerName, inviteCodeInput, setInviteCodeInput, createRoom, joinRoom, setReady, copyInviteLink, copiedInvite, error, backToLocal }: {
   room: PublicRoomState | null;
   playerId: string | null;
@@ -284,12 +348,17 @@ function RoomLobby({ room, playerId, playerName, setPlayerName, inviteCodeInput,
   );
 }
 
-function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvailable }: { startLocalDuel: () => void; startBotDuel: () => void; startRoomMode: () => void; roomModeAvailable: boolean }) {
+function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvailable, openRules }: { startLocalDuel: () => void; startBotDuel: () => void; startRoomMode: () => void; roomModeAvailable: boolean; openRules: () => void }) {
   return (
     <main className="app-shell mode-entry-shell">
       <section className="mode-hero royal-panel">
-        <p className="eyebrow">Royal Duel Chamber</p>
-        <h1>璀璨宝石对决</h1>
+        <div className="mode-hero-header">
+          <div>
+            <p className="eyebrow">Royal Duel Chamber</p>
+            <h1>璀璨宝石对决</h1>
+          </div>
+          <button className="rules-button" onClick={openRules}>规则说明</button>
+        </div>
         <p>请选择游戏模式。你可以在同一台电脑双人轮流操作，也可以和机器人练习，或创建好友房邀请朋友在线对战。</p>
       </section>
       <section className="mode-grid">
@@ -303,10 +372,10 @@ function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvaila
           <strong>与机器人对战</strong>
           <small>无需好友，机器人会自动行动，适合快速体验流程。</small>
         </button>
-          <button className="mode-card royal-panel" disabled={!roomModeAvailable} title={roomModeAvailable ? undefined : '在线静态试玩版暂不包含好友房服务器，请本地运行 npm run dev:full 使用好友房。'} onClick={startRoomMode}>
+        <button className="mode-card royal-panel" disabled={!roomModeAvailable} title={roomModeAvailable ? undefined : '在线静态试玩版暂不包含好友房服务器，请本地运行 npm run dev:full 使用好友房。'} onClick={startRoomMode}>
           <span>03</span>
           <strong>邀请好友对战</strong>
-            <small>{roomModeAvailable ? '创建房间，复制邀请链接，双方准备后开始线上对局。' : '网页试玩版支持本地和机器人模式；好友房请本地启动完整服务。'}</small>
+          <small>{roomModeAvailable ? '创建房间，复制邀请链接，双方准备后开始线上对局。' : '网页试玩版支持本地和机器人模式；好友房请本地启动完整服务。'}</small>
         </button>
       </section>
     </main>
@@ -331,6 +400,7 @@ export function App() {
   const [paymentDraft, setPaymentDraft] = useState<Required<Record<PayableTokenColor, number>>>(() => emptyPayableCounts());
   const [detailTarget, setDetailTarget] = useState<DetailTarget | null>(null);
   const [botEnabled, setBotEnabled] = useState(false);
+  const [rulesOpen, setRulesOpen] = useState(false);
   const botPlayerId = 'p2';
   const visibleGame = localMode ? game : room?.game;
 
@@ -528,7 +598,12 @@ export function App() {
   }, [localMode, botEnabled, game]);
 
   if (!modeSelected) {
-    return <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} startRoomMode={switchToRoomMode} roomModeAvailable={!STATIC_ONLY} />;
+    return (
+      <>
+        <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} startRoomMode={switchToRoomMode} roomModeAvailable={!STATIC_ONLY} openRules={() => setRulesOpen(true)} />
+        {rulesOpen && <RulesModal close={() => setRulesOpen(false)} />}
+      </>
+    );
   }
 
   if (!localMode && (!room || room.status !== 'playing' || !room.game)) {
@@ -567,6 +642,7 @@ export function App() {
         <div className="brand-lockup">
           <p className="eyebrow">Royal Duel Chamber</p>
           <h1>璀璨宝石对决</h1>
+          <button className="rules-button compact-rules-button" onClick={() => setRulesOpen(true)}>规则说明</button>
         </div>
         <div className="state-ribbon">
           <span>当前：<strong>{currentPlayer.name}</strong></span>
@@ -722,6 +798,7 @@ export function App() {
           <PlayerPanel game={gameView} playerId={gameView.players[0].id} active={gameView.currentPlayerId === gameView.players[0].id} viewerPlayerId={viewerPlayerId} openPaymentSelector={openPaymentSelector} openDetails={setDetailTarget} paymentTarget={paymentTarget} paymentDraft={paymentDraft} setPaymentDraft={setPaymentDraft} closePayment={() => setPaymentTarget(null)} run={run} />
         </div>
       </section>
+      {rulesOpen && <RulesModal close={() => setRulesOpen(false)} />}
     </main>
   );
 }
