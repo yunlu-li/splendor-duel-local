@@ -6,11 +6,27 @@
 
 ## 最快开始
 
-只想马上试玩，可以按下面 4 步走：
+只想马上试玩，可以按下面步骤走。需要先安装好 Node.js 20+，不会安装的话先看下面的“环境要求”。
+
+### 方式 A：会用 Git
 
 ```bash
 git clone https://github.com/yunlu-li/splendor-duel-local.git
 cd splendor-duel-local
+npm install
+npm run dev:full
+```
+
+### 方式 B：不会用 Git
+
+1. 打开项目页面：`https://github.com/yunlu-li/splendor-duel-local`
+2. 点击绿色 `Code` 按钮。
+3. 点击 `Download ZIP`。
+4. 解压 ZIP。
+5. 用终端进入解压后的文件夹。
+6. 执行：
+
+```bash
 npm install
 npm run dev:full
 ```
@@ -20,6 +36,12 @@ npm run dev:full
 ```text
 http://localhost:5173/
 ```
+
+注意：
+
+- 运行 `npm run dev:full` 的终端窗口要一直开着，关掉终端游戏也会停止。
+- 第一次 `npm install` 可能需要几分钟，取决于网络。
+- 如果 `localhost` 打不开，试试 `http://127.0.0.1:5173/`。
 
 进入首页后推荐先选：
 
@@ -72,11 +94,21 @@ nvm install 20
 nvm use 20
 ```
 
+安装完成后重新打开一个终端，再执行 `node -v` 和 `npm -v` 确认命令可用。
+
 ## 安装
+
+会用 Git：
 
 ```bash
 git clone https://github.com/yunlu-li/splendor-duel-local.git
 cd splendor-duel-local
+npm install
+```
+
+不会用 Git：从 GitHub 页面下载 ZIP，解压后在终端进入项目文件夹，再执行：
+
+```bash
 npm install
 ```
 
@@ -133,8 +165,10 @@ npm run server
 2. 打开 `http://localhost:5173/`。
 3. 选择 `邀请好友对战`。
 4. 创建房间后复制邀请链接。
-5. 用另一个浏览器窗口、无痕窗口，或另一台设备打开邀请链接。
+5. 用另一个浏览器窗口、无痕窗口，或同一局域网内的另一台设备打开邀请链接。
 6. 两边都点准备，游戏开始。
+
+如果是发给另一台设备，对方需要能访问你的电脑。通常要求两台设备在同一个 Wi-Fi 下，并且你的系统防火墙允许 Node.js 接入网络。
 
 ## 游戏模式
 
@@ -178,6 +212,13 @@ npm run dev:full
 
 只执行 `npm run dev` 时，前端可以玩本地双人和机器人模式，但没有房间服务器。
 
+如果另一台设备打不开邀请链接：
+
+- 确认两台设备在同一个 Wi-Fi 或局域网。
+- 确认运行游戏的电脑没有关闭终端。
+- 确认系统防火墙允许 Node.js 接入网络。
+- 先用同一台电脑的无痕窗口打开邀请链接验证房间流程。
+
 ### 依赖安装失败
 
 先确认 Node.js 版本：
@@ -191,6 +232,19 @@ node -v
 ```bash
 rm -rf node_modules package-lock.json
 npm install
+```
+
+### 端口被占用
+
+默认会使用：
+
+- 前端：`5173`
+- 房间服务器：`3001`
+
+如果启动时报端口被占用，先关闭占用这些端口的旧服务，再重新执行：
+
+```bash
+npm run dev:full
 ```
 
 ## 常用命令
