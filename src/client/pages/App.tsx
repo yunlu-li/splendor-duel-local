@@ -17,6 +17,7 @@ const TOKEN_ORDER: TokenColor[] = ['white', 'blue', 'green', 'red', 'black', 'pe
 const PAYABLE_ORDER: PayableTokenColor[] = ['white', 'blue', 'green', 'red', 'black', 'pearl'];
 const GEM_ORDER: GemColor[] = ['white', 'blue', 'green', 'red', 'black'];
 const LEVELS: CardLevel[] = [3, 2, 1];
+const STATIC_ONLY = import.meta.env.VITE_STATIC_ONLY === 'true';
 
 type PurchaseSource =
   | { type: 'market'; level: CardLevel; cardId: string }
@@ -283,7 +284,7 @@ function RoomLobby({ room, playerId, playerName, setPlayerName, inviteCodeInput,
   );
 }
 
-function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode }: { startLocalDuel: () => void; startBotDuel: () => void; startRoomMode: () => void }) {
+function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvailable }: { startLocalDuel: () => void; startBotDuel: () => void; startRoomMode: () => void; roomModeAvailable: boolean }) {
   return (
     <main className="app-shell mode-entry-shell">
       <section className="mode-hero royal-panel">
@@ -302,10 +303,10 @@ function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode }: { startLocal
           <strong>与机器人对战</strong>
           <small>无需好友，机器人会自动行动，适合快速体验流程。</small>
         </button>
-        <button className="mode-card royal-panel" onClick={startRoomMode}>
+          <button className="mode-card royal-panel" disabled={!roomModeAvailable} title={roomModeAvailable ? undefined : '在线静态试玩版暂不包含好友房服务器，请本地运行 npm run dev:full 使用好友房。'} onClick={startRoomMode}>
           <span>03</span>
           <strong>邀请好友对战</strong>
-          <small>创建房间，复制邀请链接，双方准备后开始线上对局。</small>
+            <small>{roomModeAvailable ? '创建房间，复制邀请链接，双方准备后开始线上对局。' : '网页试玩版支持本地和机器人模式；好友房请本地启动完整服务。'}</small>
         </button>
       </section>
     </main>
@@ -313,7 +314,7 @@ function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode }: { startLocal
 }
 
 export function App() {
-  const hasRoomInvite = window.location.search.includes('room=');
+  const hasRoomInvite = !STATIC_ONLY && window.location.search.includes('room=');
   const [seed, setSeed] = useState(createInitialSeed());
   const [game, setGame] = useState(() => initializeGame(seed));
   const [modeSelected, setModeSelected] = useState(hasRoomInvite);
@@ -527,7 +528,7 @@ export function App() {
   }, [localMode, botEnabled, game]);
 
   if (!modeSelected) {
-    return <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} startRoomMode={switchToRoomMode} />;
+    return <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} startRoomMode={switchToRoomMode} roomModeAvailable={!STATIC_ONLY} />;
   }
 
   if (!localMode && (!room || room.status !== 'playing' || !room.game)) {
