@@ -21,6 +21,14 @@ https://yunlu-li.github.io/splendor-duel-local/
 
 网页版本暂不包含好友房服务器，所以 `邀请好友对战` 会被禁用。想玩好友房，请按下面的本地运行方式启动完整服务。
 
+如果这个地址暂时显示 404，说明 GitHub Pages 还没有发布完成，或仓库还没有启用 Pages。仓库所有者需要到：
+
+```text
+Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
+```
+
+然后重新运行 `Deploy GitHub Pages` workflow。
+
 ### 本地运行完整版本
 
 只想马上试玩，可以按下面步骤走。需要先安装好 Node.js 20+，不会安装的话先看下面的“环境要求”。
