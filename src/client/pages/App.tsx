@@ -18,6 +18,7 @@ const PAYABLE_ORDER: PayableTokenColor[] = ['white', 'blue', 'green', 'red', 'bl
 const GEM_ORDER: GemColor[] = ['white', 'blue', 'green', 'red', 'black'];
 const LEVELS: CardLevel[] = [3, 2, 1];
 const STATIC_ONLY = import.meta.env.VITE_STATIC_ONLY === 'true';
+const PRIVILEGE_SCROLL_SRC = `${import.meta.env.BASE_URL}assets/privilege-scroll.svg`;
 
 type PurchaseSource =
   | { type: 'market'; level: CardLevel; cardId: string }
@@ -717,7 +718,7 @@ export function App() {
             <div className="scroll-bank" title={`公共卷轴 ${gameView.publicPrivileges}`}>
               <span className="tray-label">公共卷轴</span>
               <div className="scroll-icons">
-                {[0, 1, 2].map((index) => <img className={`scroll-icon-img ${index < gameView.publicPrivileges ? 'available' : 'spent'}`} key={index} src="/assets/privilege-scroll.svg" alt={index < gameView.publicPrivileges ? '可用公共卷轴' : '已使用公共卷轴'} />)}
+                {[0, 1, 2].map((index) => <img className={`scroll-icon-img ${index < gameView.publicPrivileges ? 'available' : 'spent'}`} key={index} src={PRIVILEGE_SCROLL_SRC} alt={index < gameView.publicPrivileges ? '可用公共卷轴' : '已使用公共卷轴'} />)}
               </div>
             </div>
             <div className="board-royals">
