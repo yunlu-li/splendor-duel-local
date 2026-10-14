@@ -1008,7 +1008,7 @@ function CardDetailPanel({ game, target, viewerPlayerId, close, openPaymentSelec
               <div className="card-detail-copy">
                 <strong>{card.name}</strong>
                 <span>{card.id} / L{card.level} / {card.prestige} 威望 / {card.crowns} 皇冠</span>
-                <span>奖励：{card.bonusColor ? GEM_LABEL[card.bonusColor] : owned?.copiedBonusColor ? `联结${GEM_LABEL[owned.copiedBonusColor]}` : card.cardType === 'gold' ? '黄金' : '联结'}</span>
+                <span>奖励：{card.bonusColor ? `${GEM_LABEL[card.bonusColor]} ×${card.bonusCount}` : owned?.copiedBonusColor ? `联结${GEM_LABEL[owned.copiedBonusColor]}` : card.cardType === 'gold' ? '黄金' : '联结'}</span>
                 <span>能力：{card.ability ? ABILITY_LABEL[card.ability] : '无'}</span>
                 <div className="payment-mini-line"><span>原价</span><GemCost cost={card.cost} compact /></div>
                 <div className="payment-mini-line"><span>折后</span><GemCost cost={discountedCost(player, cardId)} compact /></div>

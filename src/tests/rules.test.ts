@@ -3,7 +3,8 @@ import type { GameState, TokenColor } from '../shared/types/game';
 import { initializeGame } from '../shared/rules/initialize';
 import { canReplenishBoard, canSpendPrivilegeTakeToken, canTakeTokens, discountedCost } from '../shared/rules/validators';
 import { applyAction, IllegalActionError } from '../shared/rules/reducers';
-import { checkVictory, sameColorPrestige } from '../shared/rules/scoring';
+import { bonusCounts, checkVictory, sameColorPrestige } from '../shared/rules/scoring';
+import { getJewelCard } from '../shared/rules/cards';
 
 function emptyBoardGame(): GameState {
   const game = initializeGame('rules-test');
@@ -154,6 +155,48 @@ describe('reducers', () => {
     expect(cost.white).toBe(0);
   });
 });
+
+  it('supports the PDF level-3 1 color/Turn joker', () => {
+    const game = emptyBoardGame();
+    game.players[0].purchased = [{ cardId: 'l1-01' }];
+    game.players[0].tokens.red = 8;
+    game.market[3] = ['l3-12'];
+    game.decks[3] = [];
+
+    let next = applyAction(game, 'p1', {
+      type: 'PURCHASE_CARD',
+      source: { type: 'market', level: 3, cardId: 'l3-12' },
+      payment: { red: 8 },
+    });
+
+    expect(next.extraTurnPlayerId).toBe('p1');
+    expect(next.awaitingChoice?.type).toBe('CHOOSE_COPY_BONUS');
+  });
+
+  it('applies PDF bonus x2 cards as two permanent discounts', () => {
+    const game = emptyBoardGame();
+    game.players[0].purchased = [{ cardId: 'l2-04' }];
+    const bonuses = bonusCounts(game.players[0]);
+    expect(bonuses.white).toBe(2);
+
+    const cost = discountedCost(game.players[0], 'l1-02');
+    expect(cost.blue).toBe(3);
+    expect(cost.white).toBe(0);
+  });
+
+  it('uses the PDF costs for level-2 and level-3 joker cards', () => {
+    expect(getJewelCard('l2-21').cost).toEqual({ green: 6, pearl: 1 });
+    expect(getJewelCard('l2-22').cost).toEqual({ blue: 6, pearl: 1 });
+    expect(getJewelCard('l2-23').cost).toEqual({ green: 6, pearl: 1 });
+    expect(getJewelCard('l3-11').cost).toEqual({ black: 8 });
+    expect(getJewelCard('l3-11').prestige).toBe(0);
+    expect(getJewelCard('l3-11').crowns).toBe(3);
+    expect(getJewelCard('l3-11').ability).toBe('COPY_BONUS');
+    expect(getJewelCard('l3-12').prestige).toBe(3);
+    expect(getJewelCard('l3-12').crowns).toBe(0);
+    expect(getJewelCard('l3-12').ability).toBe('COPY_BONUS_AND_EXTRA_TURN');
+    expect(getJewelCard('l3-12').cost).toEqual({ red: 8 });
+  });
 
 describe('victory', () => {
   it('detects crown victory', () => {

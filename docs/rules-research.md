@@ -58,6 +58,7 @@
 - `TAKE_MATCHING_TOKEN`：从棋盘拿 1 个与该卡 bonus 颜色相同的 token；没有则忽略。
 - `STEAL_TOKEN`：从对手处拿 1 个非 gold token；对手没有则忽略。
 - `COPY_BONUS`：覆盖/关联一张此前已获得的有 bonus 的珠宝卡；该卡视为复制该 bonus 颜色，用于折扣和同色分数。
+- `COPY_BONUS_AND_EXTRA_TURN`：同时获得 1 Color 的关联奖励与额外回合；对应 PDF 中的 `1 color/Turn` 特殊牌。
 
 ## 皇冠与皇室卡
 
@@ -85,6 +86,7 @@
 ## 当前实现数据
 
 - 67 张珠宝卡和 4 张 royal card 已整理为结构化本地数据：`src/shared/constants/cards.local.ts`。
+- 卡牌 bonus 已支持数量字段 `bonusCount`；PDF 中二级每种颜色的第 2 张普通牌为 Bonus ×2，购买折扣和奖励统计均按 2 计算。
 - 中央棋盘坐标拓扑和螺旋填充顺序已固化为常量：`src/shared/constants/board.ts`。
 - 卡牌数据核对记录保留在 `docs/cards-official-local-review.md` 和 `docs/cards-official-local.json`。
 
@@ -115,12 +117,14 @@ export type AbilityType =
   | 'TAKE_PRIVILEGE'
   | 'TAKE_MATCHING_TOKEN'
   | 'STEAL_TOKEN'
-  | 'COPY_BONUS';
+  | 'COPY_BONUS'
+  | 'COPY_BONUS_AND_EXTRA_TURN';
 
 export interface JewelCardDef {
   id: string;
   level: CardLevel;
   bonusColor: GemColor | null;
+  bonusCount: number;
   cost: Partial<Record<Exclude<TokenColor, 'gold'>, number>>;
   prestige: number;
   crowns: number;

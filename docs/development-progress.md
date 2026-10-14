@@ -6,6 +6,7 @@
 
 - Vite + React + TypeScript 项目骨架。
 - 67 张珠宝卡 + 4 张皇室卡结构化本地数据：`src/shared/constants/cards.local.ts`。
+- 已按 `Splendor_Duel_Card_List-v3.pdf` 修正 Bonus 数量；二级每种颜色的第 2 张普通牌为 Bonus ×2，并同步到折扣计算、奖励统计和卡牌 UI。
 - 5x5 中央棋盘建模与中心螺旋填充顺序：`src/shared/constants/board.ts`。
 - seeded random 与可复现初始化：`src/shared/rules/initialize.ts`。
 - 规则校验、reducer、计分和胜利判定：
@@ -16,7 +17,7 @@
   - 购买市场卡或自己的保留卡，支持 bonus 折扣与黄金补缺口。
   - 弃 token 到 10 个。
   - 皇冠触发皇室卡选择。
-  - 卡牌能力：额外回合、获得特权、拿同色 token、偷 token、Associate 复制 bonus。
+  - 卡牌能力：额外回合、获得特权、拿同色 token、偷 token、Associate 复制 bonus，以及 `1 color/Turn` 特殊牌的组合能力。
 - 可交互前端页面：
   - 本地双人模式。
   - 机器人练习模式。

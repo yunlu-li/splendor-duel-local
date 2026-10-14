@@ -20,6 +20,7 @@ const abilityIcon: Record<AbilityType, string> = {
   TAKE_MATCHING_TOKEN: '◆',
   STEAL_TOKEN: '⇄',
   COPY_BONUS: '◎',
+  COPY_BONUS_AND_EXTRA_TURN: '◎↻',
 };
 
 const bonusIcon: Record<GemColor, string> = {
@@ -50,10 +51,10 @@ export function CardView({ card }: Props) {
         )}
 
         {card.bonusColor ? (
-          <div className="bonus-badge" title={`${GEM_LABEL[card.bonusColor]} bonus x1`}>
+          <div className="bonus-badge" title={`${GEM_LABEL[card.bonusColor]} bonus x${card.bonusCount}`}>
             <span className={`gem-dot gem-${card.bonusColor}`}>{bonusIcon[card.bonusColor]}</span>
             <span className="gem-times">x</span>
-            <strong>1</strong>
+            <strong>{card.bonusCount}</strong>
           </div>
         ) : specialLabel ? (
           <div className={`special-badge special-${card.cardType}`}>{specialLabel}</div>

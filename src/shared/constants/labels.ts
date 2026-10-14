@@ -24,4 +24,5 @@ export const ABILITY_LABEL: Record<AbilityType, string> = {
   TAKE_MATCHING_TOKEN: '拿同色宝石',
   STEAL_TOKEN: '偷对手宝石',
   COPY_BONUS: '复制/关联奖励色',
+  COPY_BONUS_AND_EXTRA_TURN: '复制/关联奖励色 + 额外回合',
 };

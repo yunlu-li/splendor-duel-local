@@ -8,7 +8,8 @@ export type AbilityType =
   | 'TAKE_PRIVILEGE'
   | 'TAKE_MATCHING_TOKEN'
   | 'STEAL_TOKEN'
-  | 'COPY_BONUS';
+  | 'COPY_BONUS'
+  | 'COPY_BONUS_AND_EXTRA_TURN';
 
 export type CardType = 'standard' | 'associate' | 'gold' | 'royal';
 
@@ -23,6 +24,7 @@ export interface BaseCardDef {
   prestige: number;
   crowns: number;
   bonusColor: GemColor | null;
+  bonusCount: number;
   cost: Cost;
   ability: AbilityType | null;
   cardType: CardType;

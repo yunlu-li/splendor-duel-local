@@ -2,7 +2,7 @@
 
 来源：公开卡牌数据库页面与本地规则实现核对。用途是为当前原型提供结构化数据检查记录。仓库不包含官方卡面图片、规则书全文或原始网页抓取快照。
 
-字段说明：`分`=威望点；`冠`=皇冠数；`奖励`=永久 bonus 颜色；`费用` 不包含黄金，黄金在支付时可抵任意缺口。
+字段说明：`分`=威望点；`冠`=皇冠数；`奖励`=永久 bonus 颜色；`费用` 不包含黄金，黄金在支付时可抵任意缺口。 二级部分卡牌的 `奖励` 数量为 2，表示该奖励计数/折扣按 2 计算。
 
 ## Level 1 珠宝卡（30 张）
 
@@ -33,11 +33,11 @@
 | l1-23 | Level 1 Red Bonus #3 | 0 | 0 | 红 | 2白 + 2黑 + 1珍珠 | 额外回合 |
 | l1-24 | Level 1 Red Bonus #4 | 0 | 0 | 红 | 2蓝 + 2绿 | 拿同色宝石 |
 | l1-25 | Level 1 Red Bonus #5 | 1 | 0 | 红 | 2白 + 3蓝 | - |
-| l1-26 | Level 1 Associate #1 | 1 | 0 | 无 | 4黑 + 1珍珠 | - |
-| l1-27 | Level 1 Associate #2 | 0 | 1 | 无 | 4白 + 1珍珠 | - |
+| l1-26 | Level 1 Associate #1 | 1 | 0 | 通配 ×1 | 4黑 + 1珍珠 | 1 Color |
+| l1-27 | Level 1 Associate #2 | 0 | 1 | 通配 ×1 | 4白 + 1珍珠 | 1 Color |
 | l1-28 | Level 1 Gold Card | 3 | 0 | 无 | 4红 + 1珍珠 | - |
-| l1-29 | Level 1 Associate #3 | 1 | 0 | 无 | 2蓝 + 2红 + 1黑 + 1珍珠 | - |
-| l1-30 | Level 1 Associate #4 | 1 | 0 | 无 | 2白 + 2绿 + 1黑 + 1珍珠 | - |
+| l1-29 | Level 1 Associate #3 | 1 | 0 | 通配 ×1 | 2蓝 + 2红 + 1黑 + 1珍珠 | 1 Color |
+| l1-30 | Level 1 Associate #4 | 1 | 0 | 通配 ×1 | 2白 + 2绿 + 1黑 + 1珍珠 | 1 Color |
 
 ## Level 2 珠宝卡（24 张）
 
@@ -46,26 +46,26 @@
 | l2-01 | Level 2 White Bonus #1 | 2 | 1 | 白 | 2绿 + 2红 + 2黑 + 1珍珠 | - |
 | l2-02 | Level 2 White Bonus #2 | 1 | 0 | 白 | 4蓝 + 3红 | 偷对手宝石 |
 | l2-03 | Level 2 White Bonus #3 | 2 | 0 | 白 | 4白 + 2黑 + 1珍珠 | 获得特权 |
-| l2-04 | Level 2 White Bonus #4 | 1 | 0 | 白 | 5蓝 + 2绿 | - |
+| l2-04 | Level 2 White Bonus #4 | 1 | 0 | 白 ×2 | 5蓝 + 2绿 | - |
 | l2-05 | Level 2 Blue Bonus #1 | 2 | 1 | 蓝 | 2白 + 2红 + 2黑 + 1珍珠 | - |
 | l2-06 | Level 2 Blue Bonus #2 | 1 | 0 | 蓝 | 4绿 + 3黑 | 偷对手宝石 |
 | l2-07 | Level 2 Blue Bonus #3 | 2 | 0 | 蓝 | 2白 + 4蓝 + 1珍珠 | 获得特权 |
-| l2-08 | Level 2 Blue Bonus #4 | 1 | 0 | 蓝 | 5绿 + 2红 | - |
+| l2-08 | Level 2 Blue Bonus #4 | 1 | 0 | 蓝 ×2 | 5绿 + 2红 | - |
 | l2-09 | Level 2 Green Bonus #1 | 2 | 1 | 绿 | 2白 + 2蓝 + 2黑 + 1珍珠 | - |
 | l2-10 | Level 2 Green Bonus #2 | 1 | 0 | 绿 | 3白 + 4红 | 偷对手宝石 |
 | l2-11 | Level 2 Green Bonus #3 | 2 | 0 | 绿 | 2蓝 + 4绿 + 1珍珠 | 获得特权 |
-| l2-12 | Level 2 Green Bonus #4 | 1 | 0 | 绿 | 5红 + 2黑 | - |
+| l2-12 | Level 2 Green Bonus #4 | 1 | 0 | 绿 ×2 | 5红 + 2黑 | - |
 | l2-13 | Level 2 Black Bonus #1 | 2 | 1 | 黑 | 2蓝 + 2绿 + 2红 + 1珍珠 | - |
 | l2-14 | Level 2 Black Bonus #2 | 1 | 0 | 黑 | 4白 + 3绿 | 偷对手宝石 |
 | l2-15 | Level 2 Black Bonus #3 | 2 | 0 | 黑 | 2红 + 4黑 + 1珍珠 | 获得特权 |
-| l2-16 | Level 2 Black Bonus #4 | 1 | 0 | 黑 | 5白 + 2蓝 | - |
+| l2-16 | Level 2 Black Bonus #4 | 1 | 0 | 黑 ×2 | 5白 + 2蓝 | - |
 | l2-17 | Level 2 Red Bonus #1 | 2 | 1 | 红 | 2白 + 2蓝 + 2绿 + 1珍珠 | - |
 | l2-18 | Level 2 Red Bonus #2 | 1 | 0 | 红 | 3蓝 + 4黑 | 偷对手宝石 |
 | l2-19 | Level 2 Red Bonus #3 | 2 | 0 | 红 | 2绿 + 4红 + 1珍珠 | 获得特权 |
-| l2-20 | Level 2 Red Bonus #4 | 1 | 0 | 红 | 2白 + 5黑 | - |
-| l2-21 | Level 2 Associate #1 | 2 | 0 | 无 | 6绿 + 1珍珠 | - |
-| l2-22 | Level 2 Associate #2 | 0 | 2 | 无 | 6绿 + 1珍珠 | - |
-| l2-23 | Level 2 Associate #3 | 0 | 2 | 无 | 6蓝 + 1珍珠 | - |
+| l2-20 | Level 2 Red Bonus #4 | 1 | 0 | 红 ×2 | 2白 + 5黑 | - |
+| l2-21 | Level 2 Associate #1 | 2 | 0 | 通配 ×1 | 6绿 + 1珍珠 | 1 Color |
+| l2-22 | Level 2 Associate #2 | 0 | 2 | 通配 ×1 | 6蓝 + 1珍珠 | 1 Color |
+| l2-23 | Level 2 Associate #3 | 0 | 2 | 通配 ×1 | 6绿 + 1珍珠 | 1 Color |
 | l2-24 | Level 2 Gold Card | 5 | 0 | 无 | 6蓝 + 1珍珠 | - |
 
 ## Level 3 珠宝卡（13 张）
@@ -82,8 +82,8 @@
 | l3-08 | Level 3 Black Bonus #2 | 4 | 0 | 黑 | 2白 + 2红 + 6黑 | - |
 | l3-09 | Level 3 Red Bonus #1 | 3 | 2 | 红 | 5蓝 + 3绿 + 3黑 + 1珍珠 | - |
 | l3-10 | Level 3 Red Bonus #2 | 4 | 0 | 红 | 2绿 + 6红 + 2黑 | - |
-| l3-11 | Level 3 Associate #1 | 3 | 0 | 无 | 8红 | 额外回合 |
-| l3-12 | Level 3 Associate #2 | 0 | 3 | 无 | 8黑 | - |
+| l3-11 | Level 3 Associate #1 | 0 | 3 | 通配 ×1 | 8黑 | 1 Color |
+| l3-12 | Level 3 Associate #2 | 3 | 0 | 通配 ×1 | 8红 | 1 Color / Turn |
 | l3-13 | Level 3 Gold Card | 6 | 0 | 无 | 8白 | - |
 
 ## 皇室卡（4 张）

@@ -96,7 +96,8 @@ function resolveImmediateAbility(state: GameState, playerId: string, ability: Ab
     if (hasToken) state.awaitingChoice = { type: 'CHOOSE_MATCHING_TOKEN', playerId, color: card.bonusColor };
     return;
   }
-  if (ability === 'COPY_BONUS') {
+  if (ability === 'COPY_BONUS' || ability === 'COPY_BONUS_AND_EXTRA_TURN') {
+    if (ability === 'COPY_BONUS_AND_EXTRA_TURN') state.extraTurnPlayerId = playerId;
     const hasBonus = player.purchased.some((owned) => {
       if (owned.cardId === sourceCardId) return false;
       const card = getJewelCard(owned.cardId);

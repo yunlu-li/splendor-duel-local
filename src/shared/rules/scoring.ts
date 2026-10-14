@@ -18,7 +18,7 @@ export function bonusCounts(player: PlayerState): Record<GemColor, number> {
   for (const owned of player.purchased) {
     const card = getJewelCard(owned.cardId);
     const color = card.bonusColor ?? owned.copiedBonusColor;
-    if (color) counts[color] += 1;
+    if (color) counts[color] += card.bonusColor ? card.bonusCount : 1;
   }
   return counts;
 }

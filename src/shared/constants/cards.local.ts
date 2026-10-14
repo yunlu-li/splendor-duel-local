@@ -19,6 +19,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -33,6 +34,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -49,6 +51,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 0,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -64,6 +67,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_MATCHING_TOKEN",
     "prestige": 0,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -79,6 +83,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -96,6 +101,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -110,6 +116,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -126,6 +133,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 0,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -141,6 +149,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_MATCHING_TOKEN",
     "prestige": 0,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -156,6 +165,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -173,6 +183,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -187,6 +198,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -203,6 +215,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 0,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -218,6 +231,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_MATCHING_TOKEN",
     "prestige": 0,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -233,6 +247,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -250,6 +265,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -264,6 +280,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -280,6 +297,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 0,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -295,6 +313,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_MATCHING_TOKEN",
     "prestige": 0,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -310,6 +329,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -327,6 +347,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -341,6 +362,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 0,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -357,6 +379,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 0,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -372,6 +395,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_MATCHING_TOKEN",
     "prestige": 0,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -387,6 +411,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -402,6 +427,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 1,
     "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -417,6 +443,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 0,
     "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -432,6 +459,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "gold"
   },
   {
@@ -449,6 +477,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 1,
     "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -466,6 +495,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 1,
     "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -483,6 +513,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 2,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -498,6 +529,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 1,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -514,6 +546,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -529,6 +562,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "white",
+    "bonusCount": 2,
     "cardType": "standard"
   },
   {
@@ -546,6 +580,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 2,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -561,6 +596,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 1,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -577,6 +613,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -592,6 +629,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "blue",
+    "bonusCount": 2,
     "cardType": "standard"
   },
   {
@@ -609,6 +647,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 2,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -624,6 +663,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 1,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -640,6 +680,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -655,6 +696,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "green",
+    "bonusCount": 2,
     "cardType": "standard"
   },
   {
@@ -672,6 +714,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 2,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -687,6 +730,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 1,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -703,6 +747,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -718,6 +763,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "black",
+    "bonusCount": 2,
     "cardType": "standard"
   },
   {
@@ -735,6 +781,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 2,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -750,6 +797,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 1,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -766,6 +814,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -781,6 +830,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 1,
     "bonusColor": "red",
+    "bonusCount": 2,
     "cardType": "standard"
   },
   {
@@ -796,26 +846,12 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 2,
     "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
     "id": "l2-22",
     "name": "Level 2 Associate #2",
-    "kind": "jewel",
-    "level": 2,
-    "crowns": 2,
-    "cost": {
-      "green": 6,
-      "pearl": 1
-    },
-    "ability": "COPY_BONUS",
-    "prestige": 0,
-    "bonusColor": null,
-    "cardType": "associate"
-  },
-  {
-    "id": "l2-23",
-    "name": "Level 2 Associate #3",
     "kind": "jewel",
     "level": 2,
     "crowns": 2,
@@ -826,6 +862,23 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 0,
     "bonusColor": null,
+    "bonusCount": 1,
+    "cardType": "associate"
+  },
+  {
+    "id": "l2-23",
+    "name": "Level 2 Associate #3",
+    "kind": "jewel",
+    "level": 2,
+    "crowns": 2,
+    "cost": {
+      "green": 6,
+      "pearl": 1
+    },
+    "ability": "COPY_BONUS",
+    "prestige": 0,
+    "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -841,6 +894,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 5,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "gold"
   },
   {
@@ -858,6 +912,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -874,6 +929,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 4,
     "bonusColor": "white",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -891,6 +947,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -907,6 +964,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 4,
     "bonusColor": "blue",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -924,6 +982,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -940,6 +999,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 4,
     "bonusColor": "green",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -957,6 +1017,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -973,6 +1034,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 4,
     "bonusColor": "black",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -990,6 +1052,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
@@ -1006,25 +1069,12 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 4,
     "bonusColor": "red",
+    "bonusCount": 1,
     "cardType": "standard"
   },
   {
     "id": "l3-11",
     "name": "Level 3 Associate #1",
-    "kind": "jewel",
-    "level": 3,
-    "crowns": 0,
-    "cost": {
-      "red": 8
-    },
-    "ability": "EXTRA_TURN",
-    "prestige": 3,
-    "bonusColor": null,
-    "cardType": "associate"
-  },
-  {
-    "id": "l3-12",
-    "name": "Level 3 Associate #2",
     "kind": "jewel",
     "level": 3,
     "crowns": 3,
@@ -1034,6 +1084,22 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": "COPY_BONUS",
     "prestige": 0,
     "bonusColor": null,
+    "bonusCount": 1,
+    "cardType": "associate"
+  },
+  {
+    "id": "l3-12",
+    "name": "Level 3 Associate #2",
+    "kind": "jewel",
+    "level": 3,
+    "crowns": 0,
+    "cost": {
+      "red": 8
+    },
+    "ability": "COPY_BONUS_AND_EXTRA_TURN",
+    "prestige": 3,
+    "bonusColor": null,
+    "bonusCount": 1,
     "cardType": "associate"
   },
   {
@@ -1048,6 +1114,7 @@ export const JEWEL_CARDS: readonly JewelCardDef[] = [
     "ability": null,
     "prestige": 6,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "gold"
   }
 ] as const;
@@ -1063,6 +1130,7 @@ export const ROYAL_CARDS: readonly RoyalCardDef[] = [
     "ability": "STEAL_TOKEN",
     "prestige": 2,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "royal"
   },
   {
@@ -1075,6 +1143,7 @@ export const ROYAL_CARDS: readonly RoyalCardDef[] = [
     "ability": "EXTRA_TURN",
     "prestige": 2,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "royal"
   },
   {
@@ -1087,6 +1156,7 @@ export const ROYAL_CARDS: readonly RoyalCardDef[] = [
     "ability": "TAKE_PRIVILEGE",
     "prestige": 2,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "royal"
   },
   {
@@ -1099,6 +1169,7 @@ export const ROYAL_CARDS: readonly RoyalCardDef[] = [
     "ability": null,
     "prestige": 3,
     "bonusColor": null,
+    "bonusCount": 0,
     "cardType": "royal"
   }
 ] as const;
