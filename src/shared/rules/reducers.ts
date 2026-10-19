@@ -1,9 +1,11 @@
 import type { AbilityType, CardLevel, GameState, GemColor, PlayerState, TokenColor, TokenCounts } from '../types/game.ts';
 import type { GameAction } from './actions.ts';
+import { validateActionShape } from './actions.ts';
 import { canDiscardTokens, canPurchaseCard, canReplenishBoard, canReserveCard, canSpendPrivilegeTakeToken, canTakeTokens, getOpponent, getPlayer, playerTokenTotal } from './validators.ts';
 import { getJewelCard, getRoyalCard } from './cards.ts';
 import { BOARD_SPIRAL } from '../constants/board.ts';
-import { checkVictory, totalCrowns } from './scoring.ts';
+import { bonusCounts, checkVictory, totalCrowns } from './scoring.ts';
+import { createRng, shuffle } from './random.ts';
 
 const TOKEN_COLORS: TokenColor[] = ['white', 'blue', 'green', 'red', 'black', 'pearl', 'gold'];
 const GEM_COLORS: GemColor[] = ['white', 'blue', 'green', 'red', 'black'];
@@ -161,6 +163,9 @@ function markMandatoryActionStarted(state: GameState): void {
 }
 
 export function applyAction(input: GameState, playerId: string, action: GameAction): GameState {
+  assertOk(validateActionShape(action));
+  if (input.status !== 'playing') throw new IllegalActionError('游戏已经结束');
+  if ((input.awaitingChoice?.playerId ?? input.currentPlayerId) !== playerId) throw new IllegalActionError('还没有轮到你');
   const state = cloneState(input);
   const player = getPlayer(state, playerId);
 
@@ -178,6 +183,8 @@ export function applyAction(input: GameState, playerId: string, action: GameActi
 
     case 'REPLENISH_BOARD': {
       assertOk(canReplenishBoard(state, playerId));
+      state.refillCount = (state.refillCount ?? 0) + 1;
+      state.bag = shuffle(state.bag, createRng(`${state.seed}:refill:${state.refillCount}`));
       for (const pos of BOARD_SPIRAL) {
         const cell = state.board.find((item) => item.pos.x === pos.x && item.pos.y === pos.y)!;
         if (cell.token === null) cell.token = state.bag.shift() ?? null;
@@ -222,7 +229,7 @@ export function applyAction(input: GameState, playerId: string, action: GameActi
         cardId = state.decks[action.source.level].shift()!;
       }
       player.reserved.push(cardId);
-      state.log.push(`${player.name} 保留 ${cardId} 并拿走 1 个黄金。`);
+      state.log.push(`${player.name} 保留了 1 张卡并拿走 1 个黄金。`);
       finishActionIfReady(state, playerId);
       return state;
     }
@@ -292,6 +299,9 @@ export function applyAction(input: GameState, playerId: string, action: GameActi
     case 'CHOOSE_COPY_BONUS': {
       if (state.awaitingChoice?.type !== 'CHOOSE_COPY_BONUS' || state.awaitingChoice.playerId !== playerId) throw new IllegalActionError('当前不需要你复制 bonus');
       if (!GEM_COLORS.includes(action.color)) throw new IllegalActionError('无效 bonus 颜色');
+      if (action.cardId !== state.awaitingChoice.cardId) throw new IllegalActionError('只能关联当前待选择的卡');
+      const previous = { ...player, purchased: player.purchased.filter((owned) => owned.cardId !== action.cardId) };
+      if (bonusCounts(previous)[action.color] <= 0) throw new IllegalActionError('只能关联已拥有的奖励颜色');
       const owned = player.purchased.find((item) => item.cardId === action.cardId);
       if (!owned) throw new IllegalActionError('待关联卡不在已购区');
       owned.copiedBonusColor = action.color;
@@ -309,6 +319,6 @@ export function applyAction(input: GameState, playerId: string, action: GameActi
     }
 
     default:
-      return state;
+      throw new IllegalActionError('未知行动类型');
   }
 }

@@ -23,11 +23,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Install smoke-test browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Check local and bot browser flows
+        run: npm run test:bot-ui
 
       - name: Build static site
         run: npm run build

@@ -78,6 +78,7 @@ export type TurnPhase =
 
 export interface GameState {
   seed: string;
+  refillCount: number;
   status: 'playing' | 'finished';
   players: [PlayerState, PlayerState];
   currentPlayerId: string;

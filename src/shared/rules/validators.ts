@@ -1,6 +1,6 @@
 import type { CardLevel, GameState, PayableTokenColor, PlayerState, TokenColor, TokenCounts } from '../types/game.ts';
 import type { CardSource, ValidationResult } from './actions.ts';
-import { fail, ok } from './actions.ts';
+import { fail, ok, validTokenCounts } from './actions.ts';
 import { getJewelCard } from './cards.ts';
 import { bonusCounts } from './scoring.ts';
 
@@ -124,6 +124,7 @@ export function discountedCost(player: PlayerState, cardId: string): Record<Paya
 }
 
 export function canPurchaseCard(state: GameState, playerId: string, source: Extract<CardSource, { type: 'market' | 'reserved' }>, payment: TokenCounts): ValidationResult {
+  if (!validTokenCounts(payment)) return fail('支付数量必须为有限的非负整数，且只能包含合法宝石颜色');
   const turn = ensureTurn(state, playerId);
   if (!turn.ok) return turn;
   if (state.turnPhase !== 'mandatory' && state.turnPhase !== 'optional') return fail('当前不能购买卡');
@@ -149,6 +150,7 @@ export function canPurchaseCard(state: GameState, playerId: string, source: Extr
 }
 
 export function canDiscardTokens(state: GameState, playerId: string, tokens: TokenCounts): ValidationResult {
+  if (!validTokenCounts(tokens)) return fail('弃置数量必须为有限的非负整数，且只能包含合法宝石颜色');
   if (state.awaitingChoice?.type !== 'DISCARD_TOKENS' || state.awaitingChoice.playerId !== playerId) return fail('当前不需要你弃 token');
   const player = getPlayer(state, playerId);
   for (const color of TOKEN_COLORS) {

@@ -49,6 +49,7 @@ export function initializeGame(seed: string, playerNames: [string, string] = ['ç
 
   return {
     seed,
+    refillCount: 0,
     status: 'playing',
     players,
     currentPlayerId: players[firstIndex].id,

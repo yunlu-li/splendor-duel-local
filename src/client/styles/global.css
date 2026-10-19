@@ -2598,6 +2598,16 @@ body {
   filter: drop-shadow(4px 6px 6px rgba(0,0,0,.34));
   transition: transform .18s ease, opacity .18s ease, filter .18s ease;
 }
+.bot-explanation {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border: 1px solid #b89b63;
+  border-radius: 8px;
+  background: #faf3e4;
+  color: #49361e;
+  font-size: 14px;
+}
+
 .scroll-icon-img.available:hover {
   transform: translateY(-2px) scale(1.05);
   filter: drop-shadow(5px 8px 8px rgba(0,0,0,.4)) saturate(1.08);

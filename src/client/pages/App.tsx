@@ -4,20 +4,23 @@ import { ABILITY_LABEL, GEM_LABEL, TOKEN_LABEL } from '../../shared/constants/la
 import type { CardLevel, GameState, GemColor, PayableTokenColor, TokenColor, TokenCounts } from '../../shared/types/game';
 import { applyAction, IllegalActionError } from '../../shared/rules/reducers';
 import { initializeGame } from '../../shared/rules/initialize';
-import { canPurchaseCard, canReplenishBoard, canReserveCard, canSpendPrivilegeTakeToken, canTakeTokens, discountedCost, getOpponent, getPlayer, suggestPaymentFor, tokenTotal } from '../../shared/rules/validators';
+import { canPurchaseCard, canSpendPrivilegeTakeToken, canTakeTokens, discountedCost, getOpponent, getPlayer, suggestPaymentFor, tokenTotal } from '../../shared/rules/validators';
 import { bonusCounts, sameColorPrestige, totalCrowns, totalPrestige } from '../../shared/rules/scoring';
 import { getJewelCard, getRoyalCard } from '../../shared/rules/cards';
 import { CardView } from '../components/CardView';
 import { GemCost } from '../components/GemCost';
-import type { GameAction } from '../../shared/rules/actions';
 import type { ClientToServerEvents, PublicRoomState, ServerToClientEvents } from '../../shared/types/room';
 import { io, type Socket } from 'socket.io-client';
+import type { BotDecision, BotDifficulty } from '../../shared/bot/types';
+import { createCoachSuggestion } from '../coach/suggestion';
+import { actingPlayerId, canHumanControl, localViewerId } from '../gameAccess';
 
 const TOKEN_ORDER: TokenColor[] = ['white', 'blue', 'green', 'red', 'black', 'pearl', 'gold'];
 const PAYABLE_ORDER: PayableTokenColor[] = ['white', 'blue', 'green', 'red', 'black', 'pearl'];
 const GEM_ORDER: GemColor[] = ['white', 'blue', 'green', 'red', 'black'];
 const LEVELS: CardLevel[] = [3, 2, 1];
-const STATIC_ONLY = import.meta.env.VITE_STATIC_ONLY === 'true';
+// Friend-room implementation is parked; only local and bot modes are exposed.
+const ROOM_MODE_AVAILABLE = false;
 const PRIVILEGE_SCROLL_SRC = `${import.meta.env.BASE_URL}assets/privilege-scroll.svg`;
 
 type PurchaseSource =
@@ -32,12 +35,6 @@ type PaymentTarget = {
 type DetailTarget = {
   playerId: string;
   type: 'purchased' | 'reserved';
-};
-
-type CoachSuggestion = {
-  title: string;
-  detail: string;
-  action?: GameAction;
 };
 
 type RoomSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -109,118 +106,6 @@ function buildPaymentFromDraft(draft: Required<Record<PayableTokenColor, number>
   const payment: TokenCounts = { ...draft };
   payment.gold = PAYABLE_ORDER.reduce((sum, color) => sum + Math.max(0, cost[color] - draft[color]), 0);
   return payment;
-}
-
-function cardPower(cardId: string): number {
-  const card = getJewelCard(cardId);
-  return card.prestige * 10 + card.crowns * 4 + (card.ability ? 3 : 0) + (card.level - 1) * 2;
-}
-
-function createCoachSuggestion(game: GameState, playerId = game.currentPlayerId): CoachSuggestion {
-  const player = getPlayer(game, playerId);
-  if (game.status !== 'playing') return { title: '游戏已结束', detail: '可以点击顶部重开或随机开始新局。' };
-  if (game.awaitingChoice) return { title: '先处理选择', detail: '当前有皇室、卡牌能力或弃 token 面板需要处理。' };
-
-  const affordableMarket = LEVELS.flatMap((level) => game.market[level].map((cardId) => ({ level, cardId })))
-    .filter(({ level, cardId }) => canPurchaseCard(game, player.id, { type: 'market', level, cardId }, suggestPaymentFor(player, cardId)).ok)
-    .sort((a, b) => cardPower(b.cardId) - cardPower(a.cardId));
-  if (affordableMarket[0]) {
-    const best = affordableMarket[0];
-    return {
-      title: `建议购买 ${best.cardId}`,
-      detail: `可直接买市场 L${best.level}，支付：${paymentLabel(suggestPaymentFor(player, best.cardId))}。`,
-      action: { type: 'PURCHASE_CARD', source: { type: 'market', level: best.level, cardId: best.cardId }, payment: suggestPaymentFor(player, best.cardId) },
-    };
-  }
-
-  const affordableReserved = player.reserved
-    .filter((cardId) => canPurchaseCard(game, player.id, { type: 'reserved', cardId }, suggestPaymentFor(player, cardId)).ok)
-    .sort((a, b) => cardPower(b) - cardPower(a));
-  if (affordableReserved[0]) {
-    const cardId = affordableReserved[0];
-    return {
-      title: `建议购买保留卡 ${cardId}`,
-      detail: `保留区已有可买卡，支付：${paymentLabel(suggestPaymentFor(player, cardId))}。`,
-      action: { type: 'PURCHASE_CARD', source: { type: 'reserved', cardId }, payment: suggestPaymentFor(player, cardId) },
-    };
-  }
-
-  const goldCellId = game.board.find((cell) => cell.token === 'gold')?.id;
-  const reserveCandidate = LEVELS.flatMap((level) => game.market[level].map((cardId) => ({ level, cardId }))).sort((a, b) => cardPower(b.cardId) - cardPower(a.cardId))[0];
-  if (goldCellId && reserveCandidate && canReserveCard(game, player.id, { type: 'market', level: reserveCandidate.level, cardId: reserveCandidate.cardId }, goldCellId).ok) {
-    return {
-      title: `建议保留 ${reserveCandidate.cardId}`,
-      detail: `当前买不了好牌，可以拿黄金并保留高价值 L${reserveCandidate.level} 卡。`,
-      action: { type: 'RESERVE_CARD', source: { type: 'market', level: reserveCandidate.level, cardId: reserveCandidate.cardId }, goldCellId },
-    };
-  }
-
-  const line = findBestTokenLine(game);
-  if (line.length > 0) {
-    return {
-      title: `建议拿 ${line.length} 个 token`,
-      detail: line.map((cellId) => game.board.find((cell) => cell.id === cellId)?.token).filter(Boolean).map((token) => TOKEN_LABEL[token as TokenColor]).join(' + '),
-      action: { type: 'TAKE_TOKENS', cellIds: line },
-    };
-  }
-
-  if (canReplenishBoard(game, player.id).ok) {
-    return { title: '建议补充棋盘', detail: '棋盘可拿 token 不多，补盘会让对手获得 1 个特权。', action: { type: 'REPLENISH_BOARD' } };
-  }
-
-  return { title: '暂无明显建议', detail: '请选择合法 token、保留卡，或查看市场支付情况。' };
-}
-
-function findBestTokenLine(game: GameState): string[] {
-  const cells = game.board.filter((cell) => cell.token && cell.token !== 'gold');
-  const candidates: string[][] = [];
-  for (const a of cells) candidates.push([a.id]);
-  for (let i = 0; i < cells.length; i += 1) {
-    for (let j = i + 1; j < cells.length; j += 1) candidates.push([cells[i].id, cells[j].id]);
-    for (let j = i + 1; j < cells.length; j += 1) {
-      for (let k = j + 1; k < cells.length; k += 1) candidates.push([cells[i].id, cells[j].id, cells[k].id]);
-    }
-  }
-  const valid = candidates.filter((ids) => canTakeTokens(game, game.currentPlayerId, ids).ok);
-  valid.sort((a, b) => {
-    if (b.length !== a.length) return b.length - a.length;
-    const pearls = (ids: string[]) => ids.filter((id) => game.board.find((cell) => cell.id === id)?.token === 'pearl').length;
-    return pearls(b) - pearls(a);
-  });
-  return valid[0] ?? [];
-}
-
-function chooseBotAction(game: GameState): GameAction | null {
-  const choice = game.awaitingChoice;
-  if (choice) {
-    const player = getPlayer(game, choice.playerId);
-    if (choice.type === 'DISCARD_TOKENS') {
-      const tokens: TokenCounts = {};
-      let remain = choice.excess;
-      for (const color of TOKEN_ORDER) {
-        const count = Math.min(remain, player.tokens[color]);
-        if (count > 0) tokens[color] = count;
-        remain -= count;
-        if (remain === 0) break;
-      }
-      return { type: 'DISCARD_TOKENS', tokens };
-    }
-    if (choice.type === 'CHOOSE_ROYAL') return { type: 'CHOOSE_ROYAL', royalCardId: game.availableRoyals[0] };
-    if (choice.type === 'CHOOSE_STEAL_TOKEN') {
-      const opponent = getOpponent(game, choice.playerId);
-      const token = TOKEN_ORDER.find((color) => color !== 'gold' && opponent.tokens[color] > 0) as Exclude<TokenColor, 'gold'> | undefined;
-      return token ? { type: 'CHOOSE_STEAL_TOKEN', token } : { type: 'SKIP_EFFECT' };
-    }
-    if (choice.type === 'CHOOSE_MATCHING_TOKEN') {
-      const cell = game.board.find((item) => item.token === choice.color);
-      return cell ? { type: 'CHOOSE_MATCHING_TOKEN', cellId: cell.id } : { type: 'SKIP_EFFECT' };
-    }
-    if (choice.type === 'CHOOSE_COPY_BONUS') {
-      const color = GEM_ORDER.find((item) => bonusCounts(player)[item] > 0);
-      return color ? { type: 'CHOOSE_COPY_BONUS', cardId: choice.cardId, color } : { type: 'SKIP_EFFECT' };
-    }
-  }
-  return createCoachSuggestion(game).action ?? null;
 }
 
 function RulesModal({ close }: { close: () => void }) {
@@ -349,7 +234,7 @@ function RoomLobby({ room, playerId, playerName, setPlayerName, inviteCodeInput,
   );
 }
 
-function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvailable, openRules }: { startLocalDuel: () => void; startBotDuel: () => void; startRoomMode: () => void; roomModeAvailable: boolean; openRules: () => void }) {
+function ModeEntry({ startLocalDuel, startBotDuel, openRules }: { startLocalDuel: () => void; startBotDuel: () => void; openRules: () => void }) {
   return (
     <main className="app-shell mode-entry-shell">
       <section className="mode-hero royal-panel">
@@ -360,7 +245,7 @@ function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvaila
           </div>
           <button className="rules-button" onClick={openRules}>规则说明</button>
         </div>
-        <p>请选择游戏模式。你可以在同一台电脑双人轮流操作，也可以和机器人练习，或创建好友房邀请朋友在线对战。</p>
+        <p>请选择游戏模式。你可以在同一台电脑双人轮流操作，也可以和机器人练习。</p>
       </section>
       <section className="mode-grid">
         <button className="mode-card royal-panel" onClick={startLocalDuel}>
@@ -373,18 +258,13 @@ function ModeEntry({ startLocalDuel, startBotDuel, startRoomMode, roomModeAvaila
           <strong>与机器人对战</strong>
           <small>无需好友，机器人会自动行动，适合快速体验流程。</small>
         </button>
-        <button className="mode-card royal-panel" disabled={!roomModeAvailable} title={roomModeAvailable ? undefined : '在线静态试玩版暂不包含好友房服务器，请本地运行 npm run dev:full 使用好友房。'} onClick={startRoomMode}>
-          <span>03</span>
-          <strong>邀请好友对战</strong>
-          <small>{roomModeAvailable ? '创建房间，复制邀请链接，双方准备后开始线上对局。' : '网页试玩版支持本地和机器人模式；好友房请本地启动完整服务。'}</small>
-        </button>
       </section>
     </main>
   );
 }
 
 export function App() {
-  const hasRoomInvite = !STATIC_ONLY && window.location.search.includes('room=');
+  const hasRoomInvite = ROOM_MODE_AVAILABLE && window.location.search.includes('room=');
   const [seed, setSeed] = useState(createInitialSeed());
   const [game, setGame] = useState(() => initializeGame(seed));
   const [modeSelected, setModeSelected] = useState(hasRoomInvite);
@@ -401,6 +281,10 @@ export function App() {
   const [paymentDraft, setPaymentDraft] = useState<Required<Record<PayableTokenColor, number>>>(() => emptyPayableCounts());
   const [detailTarget, setDetailTarget] = useState<DetailTarget | null>(null);
   const [botEnabled, setBotEnabled] = useState(false);
+  const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>('competitive');
+  const [botExplanation, setBotExplanation] = useState('');
+  const [botComputeFailed, setBotComputeFailed] = useState(false);
+  const [botRetryToken, setBotRetryToken] = useState(0);
   const [rulesOpen, setRulesOpen] = useState(false);
   const botPlayerId = 'p2';
   const visibleGame = localMode ? game : room?.game;
@@ -408,6 +292,10 @@ export function App() {
   const currentPlayer = visibleGame ? getPlayer(visibleGame, visibleGame.currentPlayerId) : game.players[0];
 
   const marketCards = useMemo(() => new Map(JEWEL_CARDS.map((card) => [card.id, card])), []);
+
+  useEffect(() => {
+    setBotExplanation('');
+  }, [seed, botEnabled]);
 
   useEffect(() => {
     if (localMode || socket) return;
@@ -429,6 +317,7 @@ export function App() {
 
   function resetGame(nextSeed = seed) {
     if (!localMode) return;
+    setBotExplanation('');
     setSeed(nextSeed);
     setGame(initializeGame(nextSeed, ['玩家', botEnabled ? '机器人' : '玩家 B']));
     setSelectedCells([]);
@@ -451,6 +340,15 @@ export function App() {
   }
 
   function run(actionPlayerId: string, action: Parameters<typeof applyAction>[2]) {
+    if (localMode && !canHumanControl(game, actionPlayerId, botEnabled)) {
+      setError('当前不能操作，请等待当前玩家完成行动。');
+      return;
+    }
+    dispatchAction(actionPlayerId, action);
+  }
+
+  // Bot results use a separate internal dispatch path; UI handlers always go through run().
+  function dispatchAction(actionPlayerId: string, action: Parameters<typeof applyAction>[2]) {
     try {
       if (!localMode && room && socket) {
         socket.emit('game:action', { roomId: room.roomId, action }, (response) => {
@@ -478,6 +376,7 @@ export function App() {
   }
 
   function toggleCell(cellId: string) {
+    if (localMode && !canHumanControl(game, actingPlayerId(game), botEnabled)) return;
     const choice = visibleGame?.awaitingChoice;
     if (choice?.type === 'CHOOSE_MATCHING_TOKEN') {
       const cell = visibleGame?.board.find((item) => item.id === cellId);
@@ -497,6 +396,7 @@ export function App() {
 
   function openPaymentSelector(source: PurchaseSource, playerId = currentPlayer.id) {
     if (!visibleGame) return;
+    if (localMode && !canHumanControl(game, playerId, botEnabled)) return;
     const player = getPlayer(visibleGame, playerId);
     setPaymentTarget({ playerId, source });
     setPaymentDraft(toPayableDraft(suggestPaymentFor(player, source.cardId)));
@@ -588,20 +488,49 @@ export function App() {
   }
 
   useEffect(() => {
-    if (!localMode || !botEnabled || game.status !== 'playing') return;
+    if (!modeSelected || !localMode || !botEnabled || game.status !== 'playing') return;
     const actingPlayerId = game.awaitingChoice?.playerId ?? game.currentPlayerId;
     if (actingPlayerId !== botPlayerId) return;
+    setBotComputeFailed(false);
+    let worker: Worker | undefined;
+    let watchdog: number | undefined;
+    let cancelled = false;
+    const fail = (message: string) => {
+      if (cancelled) return;
+      worker?.terminate();
+      window.clearTimeout(watchdog);
+      setBotComputeFailed(true);
+      setError(message);
+    };
     const timer = window.setTimeout(() => {
-      const action = chooseBotAction(game);
-      if (action) run(botPlayerId, action);
+      try {
+        worker = new Worker(new URL('../workers/bot.worker.ts', import.meta.url), { type: 'module' });
+        worker.onmessage = (event: MessageEvent<{ decision?: BotDecision | null; error?: string }>) => {
+          if (cancelled) return;
+          worker?.terminate();
+          window.clearTimeout(watchdog);
+          const { decision, error: workerError } = event.data;
+          if (decision) {
+            setBotExplanation(decision.explanation);
+            dispatchAction(botPlayerId, decision.action);
+          } else {
+            fail(workerError ?? '机器人暂时没有可执行行动，可以重试或重开此局。');
+          }
+        };
+        worker.onerror = () => fail('机器人计算失败，可以重试，当前对局已保留。');
+        watchdog = window.setTimeout(() => fail('机器人计算超时，可以重试，当前对局已保留。'), 30000);
+        worker.postMessage({ game, difficulty: botDifficulty });
+      } catch {
+        fail('机器人无法启动，可以重试，当前对局已保留。');
+      }
     }, 650);
-    return () => window.clearTimeout(timer);
-  }, [localMode, botEnabled, game]);
+    return () => { cancelled = true; window.clearTimeout(timer); window.clearTimeout(watchdog); worker?.terminate(); };
+  }, [modeSelected, localMode, botEnabled, botDifficulty, game, botRetryToken]);
 
   if (!modeSelected) {
     return (
       <>
-        <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} startRoomMode={switchToRoomMode} roomModeAvailable={!STATIC_ONLY} openRules={() => setRulesOpen(true)} />
+        <ModeEntry startLocalDuel={startLocalDuel} startBotDuel={startBotDuel} openRules={() => setRulesOpen(true)} />
         {rulesOpen && <RulesModal close={() => setRulesOpen(false)} />}
       </>
     );
@@ -634,7 +563,9 @@ export function App() {
   const gameView = visibleGame ?? game;
   const matchingChoice = gameView.awaitingChoice?.type === 'CHOOSE_MATCHING_TOKEN' ? gameView.awaitingChoice : null;
   const roomViewerSeat = room?.players.find((player) => player.id === roomPlayerId)?.seat;
-  const viewerPlayerId = localMode ? gameView.currentPlayerId : roomViewerSeat;
+  const viewerPlayerId = localMode ? localViewerId(gameView, botEnabled) : roomViewerSeat;
+  const canOperate = localMode ? canHumanControl(gameView, actingPlayerId(gameView), botEnabled)
+    : viewerPlayerId === actingPlayerId(gameView) && gameView.status === 'playing';
   const selectedPrivilegeCheck = selectedCells.length === 1 ? canSpendPrivilegeTakeToken(gameView, currentPlayer.id, selectedCells[0]) : null;
 
   return (
@@ -658,12 +589,20 @@ export function App() {
           <button onClick={() => resetGame(seed)}>重开</button>
           <button onClick={() => resetGame(`local-${Date.now()}`)}>随机</button>
           <button className={botEnabled ? 'mode-active' : ''} onClick={() => setBotMode(!botEnabled)}>{botEnabled ? '关机器人' : '开机器人'}</button>
-          <button className={!localMode ? 'mode-active' : ''} onClick={switchToRoomMode}>好友房</button>
+          {localMode && botEnabled && <label>难度 <select aria-label="机器人难度" value={botDifficulty} onChange={(event) => setBotDifficulty(event.target.value as BotDifficulty)}>
+            <option value="friendly">休闲</option><option value="competitive">竞技</option>
+          </select></label>}
           <button onClick={() => setModeSelected(false)}>模式</button>
         </div>
       </section>
 
-      {error && <div className="error-banner floating-banner">{error}</div>}
+      {error && <div className="error-banner floating-banner">{error}
+        {localMode && botEnabled && botComputeFailed && actingPlayerId(game) === botPlayerId && <button onClick={() => {
+          setError(null);
+          setBotRetryToken((value) => value + 1);
+        }}>重试机器人</button>}
+      </div>}
+      {localMode && botEnabled && botExplanation && <p className="bot-explanation" role="status">机器人：{botExplanation}</p>}
       {gameView.winner && (
         <section className="winner-banner floating-banner">
           <h2>{getPlayer(gameView, gameView.winner.winnerId).name} 获胜！</h2>
@@ -672,7 +611,7 @@ export function App() {
         </section>
       )}
 
-      {gameView.awaitingChoice && (
+      {gameView.awaitingChoice && canOperate && (
         <AwaitingChoicePanel game={gameView} run={run} />
       )}
 
@@ -698,6 +637,7 @@ export function App() {
           <div className="board board-5x5 compact-board table-board">
             {gameView.board.map((cell) => (
               <button
+                disabled={!canOperate || Boolean(gameView.awaitingChoice && !matchingChoice)}
                 className={`token token-${cell.token ?? 'empty'} ${selectedCells.includes(cell.id) ? 'selected' : ''} ${matchingChoice && cell.token === matchingChoice.color ? 'matching-available' : ''} ${matchingChoice && cell.token !== matchingChoice.color ? 'matching-unavailable' : ''}`}
                 key={cell.id}
                 style={{ gridColumn: cell.pos.x + 1, gridRow: cell.pos.y + 1 }}
@@ -709,9 +649,9 @@ export function App() {
             ))}
           </div>
           <div className="action-bar board-actions">
-            <button disabled={gameView.status !== 'playing' || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿取</button>
-            <button disabled={!selectedPrivilegeCheck?.ok} title={selectedPrivilegeCheck?.reason} onClick={() => run(currentPlayer.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>特权拿</button>
-            <button disabled={gameView.turnPhase !== 'optional' || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'REPLENISH_BOARD' })}>补盘</button>
+            <button disabled={!canOperate || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿取</button>
+            <button disabled={!canOperate || !selectedPrivilegeCheck?.ok} title={selectedPrivilegeCheck?.reason} onClick={() => run(currentPlayer.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>特权拿</button>
+            <button disabled={!canOperate || gameView.turnPhase !== 'optional' || Boolean(gameView.awaitingChoice)} onClick={() => run(currentPlayer.id, { type: 'REPLENISH_BOARD' })}>补盘</button>
             <button onClick={() => setSelectedCells([])}>清空</button>
           </div>
           <div className="board-below-tray">
@@ -741,7 +681,7 @@ export function App() {
                 <div className="level-stamp">
                   <strong>L{level}</strong>
                   <span>{gameView.decks[level].length}</span>
-                  <button disabled={!firstGoldCellId() || currentPlayer.reserved.length >= 3 || gameView.decks[level].length === 0} onClick={() => {
+                  <button disabled={!canOperate || Boolean(gameView.awaitingChoice) || !firstGoldCellId() || currentPlayer.reserved.length >= 3 || gameView.decks[level].length === 0} onClick={() => {
                     const goldCellId = firstGoldCellId();
                     if (goldCellId) run(currentPlayer.id, { type: 'RESERVE_CARD', source: { type: 'deck', level }, goldCellId });
                   }}>盲保</button>
@@ -750,7 +690,7 @@ export function App() {
                   {game.market[level].map((id) => {
                     const card = marketCards.get(id)!;
                     const payment = suggestPaymentFor(currentPlayer, id);
-                    const canBuy = canPurchaseCard(gameView, currentPlayer.id, { type: 'market', level, cardId: id }, payment).ok;
+                    const canBuy = canOperate && canPurchaseCard(gameView, currentPlayer.id, { type: 'market', level, cardId: id }, payment).ok;
                     const goldCellId = firstGoldCellId();
                     return (
                       <div className={`card-action compact-card-action table-card-action ${canBuy ? 'card-can-buy' : 'card-cannot-buy'}`} key={id}>
@@ -758,7 +698,7 @@ export function App() {
                         <div className="mini-info pay-info"><GemCost cost={discountedCost(currentPlayer, id)} /><small>{missingPaymentLabel(gameView, currentPlayer.id, id)}</small></div>
                         <div className="card-buttons">
                           <button disabled={!canBuy} onClick={() => openPaymentSelector({ type: 'market', level, cardId: id })}>买</button>
-                          <button disabled={!goldCellId || currentPlayer.reserved.length >= 3} onClick={() => goldCellId && run(currentPlayer.id, { type: 'RESERVE_CARD', source: { type: 'market', level, cardId: id }, goldCellId })}>留</button>
+                          <button disabled={!canOperate || Boolean(gameView.awaitingChoice) || !goldCellId || currentPlayer.reserved.length >= 3} onClick={() => goldCellId && run(currentPlayer.id, { type: 'RESERVE_CARD', source: { type: 'market', level, cardId: id }, goldCellId })}>留</button>
                         </div>
                         {isPaymentTarget(paymentTarget, currentPlayer.id, { type: 'market', level, cardId: id }) && (
                           <CompactPaymentPopover
@@ -806,6 +746,7 @@ export function App() {
 
 function TurnCoachPanel({ game, selectedCells, clearSelection, run, botEnabled, botPlayerId }: { game: GameState; selectedCells: string[]; clearSelection: () => void; run: (playerId: string, action: Parameters<typeof applyAction>[2]) => void; botEnabled: boolean; botPlayerId: string }) {
   const player = getPlayer(game, game.currentPlayerId);
+  const isBotTurn = botEnabled && ((game.awaitingChoice?.playerId ?? game.currentPlayerId) === botPlayerId);
   const chosenCells = selectedCells.map((id) => game.board.find((cell) => cell.id === id)).filter(Boolean) as GameState['board'];
   const chosenTokens = chosenCells.map((cell) => cell.token).filter(Boolean) as TokenColor[];
   const takeCheck = selectedCells.length ? canTakeTokens(game, player.id, selectedCells) : null;
@@ -813,10 +754,11 @@ function TurnCoachPanel({ game, selectedCells, clearSelection, run, botEnabled, 
   const selectedText = chosenTokens.length ? chosenTokens.map((token) => TOKEN_LABEL[token]).join(' + ') : '尚未选择棋盘 token';
   const affordableMarket = LEVELS.flatMap((level) => game.market[level].map((cardId) => ({ level, cardId })))
     .filter(({ level, cardId }) => canPurchaseCard(game, player.id, { type: 'market', level, cardId }, suggestPaymentFor(player, cardId)).ok);
-  const affordableReserved = player.reserved.filter((cardId) => canPurchaseCard(game, player.id, { type: 'reserved', cardId }, suggestPaymentFor(player, cardId)).ok);
+  const affordableReserved = isBotTurn ? [] : player.reserved.filter((cardId) => canPurchaseCard(game, player.id, { type: 'reserved', cardId }, suggestPaymentFor(player, cardId)).ok);
   const goldCell = game.board.find((cell) => cell.token === 'gold');
-  const suggestion = createCoachSuggestion(game, player.id);
-  const isBotTurn = botEnabled && ((game.awaitingChoice?.playerId ?? game.currentPlayerId) === botPlayerId);
+  const suggestion: ReturnType<typeof createCoachSuggestion> = isBotTurn
+    ? { title: '机器人正在思考', detail: '行动后会展示理由。' }
+    : createCoachSuggestion(game, player.id, paymentLabel);
 
   let nextHint = '先执行可选行动，或直接选择一个强制行动结束回合。';
   if (game.awaitingChoice) nextHint = '先处理弹出的选择/弃牌面板，之后回合会继续结算。';
@@ -838,15 +780,15 @@ function TurnCoachPanel({ game, selectedCells, clearSelection, run, botEnabled, 
       <p>{isBotTurn ? '机器人正在思考并会自动行动。' : nextHint}</p>
       <div className="coach-actions">
         <button disabled={isBotTurn || !suggestion.action} onClick={() => suggestion.action && run(player.id, suggestion.action)}>执行建议</button>
-        <button disabled={!takeCheck?.ok} onClick={() => run(player.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿已选 token</button>
-        <button disabled={!privilegeCheck?.ok} onClick={() => run(player.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>花特权拿 1 个</button>
-        <button disabled={game.turnPhase !== 'optional' || !game.board.some((cell) => cell.token === null) || game.bag.length === 0 || Boolean(game.awaitingChoice)} onClick={() => run(player.id, { type: 'REPLENISH_BOARD' })}>补充棋盘</button>
+        <button disabled={isBotTurn || !takeCheck?.ok} onClick={() => run(player.id, { type: 'TAKE_TOKENS', cellIds: selectedCells })}>拿已选 token</button>
+        <button disabled={isBotTurn || !privilegeCheck?.ok} onClick={() => run(player.id, { type: 'SPEND_PRIVILEGE_TAKE_TOKEN', cellId: selectedCells[0] })}>花特权拿 1 个</button>
+        <button disabled={isBotTurn || game.status !== 'playing' || game.turnPhase !== 'optional' || !game.board.some((cell) => cell.token === null) || game.bag.length === 0 || Boolean(game.awaitingChoice)} onClick={() => run(player.id, { type: 'REPLENISH_BOARD' })}>补充棋盘</button>
         <button disabled={!selectedCells.length} onClick={clearSelection}>清空选择</button>
       </div>
       <div className="coach-lists">
         <span className="coach-suggestion">建议：{suggestion.title} - {suggestion.detail}</span>
         <span>可买市场：{affordableMarket.length ? affordableMarket.map(({ cardId }) => cardId).join('、') : '暂无'}</span>
-        <span>可买保留：{affordableReserved.length ? affordableReserved.join('、') : '暂无'}</span>
+        <span>可买保留：{isBotTurn ? '对手保留卡已隐藏' : affordableReserved.length ? affordableReserved.join('、') : '暂无'}</span>
         <span>黄金格：{goldCell ? goldCell.id : '暂无'}</span>
       </div>
       {takeCheck && !takeCheck.ok && <small className="coach-warning">拿取校验：{takeCheck.reason}</small>}
